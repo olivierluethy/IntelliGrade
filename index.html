@@ -24,6 +24,16 @@
     <h2><u>Calculate needed grade to get wished average</u></h2>
     <button onclick="calculateMagicMark()">Calculate needed grade to get wished average</button>
 
+    <!-- Calculate Grade Increase or Decrease -->
+    <h2><u>Calculate grade increase or decrease</u></h2>
+    <label for="">Enter original grade</label>
+    <input type="number" placeholder="" id="original_grade" oninput="calculateGradeIncrease()">
+
+    <label for="">Enter the raised grade</label>
+    <input type="number" id="raised_grade" oninput="calculateGradeIncrease()">
+
+    <p id="showIncrease"></p>
+
     <script src="script.js"></script>
 </body>
 </html>

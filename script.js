@@ -55,4 +55,15 @@ function calculate_magic_mark(total_marks, num_marks) {
     }
     }
   }
+
+  function calculateGradeIncrease() {
+    const originalGrade = parseFloat(document.getElementById("original_grade").value);
+    const raisedGrade = parseFloat(document.getElementById("raised_grade").value);
+    
+    const increase = raisedGrade - originalGrade;
+    const percentageIncrease = (increase / originalGrade) * 100;
+    
+    document.getElementById("showIncrease").innerHTML = `It got increased by: ${percentageIncrease}%`;
+  }
+  
   
