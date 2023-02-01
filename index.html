@@ -9,6 +9,8 @@
 </head>
 <body>
     <h1>SchoolKid</h1>
+
+    <!-- Calculating grade based on points -->
     <h2><u>Calculate Grade</u></h2>
     <label for="">Enter earned points</label>
     <input type="number" id="earnedPoints" oninput="calculateGrade()">
@@ -16,8 +18,11 @@
     <label for="">Enter max points</label>
     <input type="number" id="maxPoints" oninput="calculateGrade()">
 
-    <p id="showGrade">Your grade is a: </p>
+    <p id="showGrade"></p>
 
+    <!-- Calculating needed grade to get wished average -->
+    <h2><u>Calculate needed grade to get wished average</u></h2>
+    <button onclick="calculateMagicMark()">Calculate needed grade to get wished average</button>
 
     <script src="script.js"></script>
 </body>
