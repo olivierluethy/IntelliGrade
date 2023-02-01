@@ -56,14 +56,30 @@ function calculate_magic_mark(total_marks, num_marks) {
     }
   }
 
-  function calculateGradeIncrease() {
+// This function calculates the increase or decrease in percentage of the raised grade compared to the original grade
+function calculateGradeInDecrease() {
+    // Get the original grade from the input field with the id "original_grade"
     const originalGrade = parseFloat(document.getElementById("original_grade").value);
+    
+    // Get the raised grade from the input field with the id "raised_grade"
     const raisedGrade = parseFloat(document.getElementById("raised_grade").value);
     
-    const increase = raisedGrade - originalGrade;
-    const percentageIncrease = (increase / originalGrade) * 100;
+    // Calculate the increase by subtracting the original grade from the raised grade
+    let increase = raisedGrade - originalGrade;
     
-    document.getElementById("showIncrease").innerHTML = `It got increased by: ${percentageIncrease}%`;
-  }
-  
-  
+    // Calculate the percentage increase by dividing the increase by the original grade
+    let percentageIncrease = (increase / originalGrade) * 100;
+    
+    // Check if the increase is greater than 0, less than 0, or equal to 0
+    if (increase > 0) {
+      // If the increase is greater than 0, display the percentage increase with the text "It got increased by: "
+      document.getElementById("showIncrease").innerHTML = `It got increased by: ${percentageIncrease}%`;
+    } else if (increase < 0) {
+      // If the increase is less than 0, take the absolute value of the percentage increase and display it with the text "It got decreased by: "
+      percentageIncrease = Math.abs(percentageIncrease);
+      document.getElementById("showIncrease").innerHTML = `It got decreased by: ${percentageIncrease}%`;
+    } else {
+      // If the increase is equal to 0, display the text "There was no change."
+      document.getElementById("showIncrease").innerHTML = `There was no change.`;
+    }
+  }  
