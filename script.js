@@ -42,6 +42,9 @@ function calculate_magic_mark(total_marks, num_marks) {
       let mark = prompt("Type a mark (s to stop)");
         if(mark === "s"){
           break;
+        } else if(mark === null){
+            alert("Prompt cancelled");
+            break;
         } else{
             mark = parseFloat(mark);
             if (isNaN(mark)){
