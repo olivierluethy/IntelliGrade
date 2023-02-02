@@ -40,19 +40,25 @@ function calculate_magic_mark(total_marks, num_marks) {
     // Loops until the user inputs 's' to stop
     while (true) {
       let mark = prompt("Type a mark (s to stop)");
-      if(mark == "s"){
-        calculate_magic_mark(total_marks, num_marks);
-    }else{
-        mark = parseFloat(mark);
-        if (isNaN(mark)){
-            alert("Invalid input. Please enter a valid mark or 's' to stop.");
-        } else if (mark > 6){
-            alert("Mark isn't valid");
-        } else {
-            total_marks += mark;
-            num_marks += 1;
-        }
-    }
+        if(mark === "s"){
+          break;
+        } else{
+            mark = parseFloat(mark);
+            if (isNaN(mark)){
+                alert("Invalid input. Please enter a valid mark or 's' to stop.");
+            } else if (mark > 6){
+                alert("Mark isn't valid");
+            } else {
+                total_marks += mark;
+                num_marks += 1;
+            }
+          }
+      }
+    if (num_marks > 0) {
+        let average = total_marks / num_marks;
+        alert("The average is " + average);
+    } else {
+        alert("No marks were entered");
     }
   }
 
