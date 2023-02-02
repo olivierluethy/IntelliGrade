@@ -43,7 +43,6 @@ function calculate_magic_mark(total_marks, num_marks) {
         if(mark === "s"){
           break;
         } else if(mark === null){
-            alert("Prompt cancelled");
             break;
         } else{
             mark = parseFloat(mark);
