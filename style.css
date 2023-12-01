@@ -1,18 +1,19 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: black;
-    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #282c35;
+    color: #fff;
 }
-main{
-    margin-left: 2rem;
+
+main {
+    margin: 2rem;
 }
 
 button {
-    background-color: white;
+    background-color: #61dafb;
     border: none;
-    color: black;
+    color: #282c35;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -20,12 +21,28 @@ button {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-  }
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
 
-  input[type=text], input[type=number] {
+button:hover {
+    background-color: #4fa3d1;
+}
+
+input[type=text],
+input[type=number] {
     width: 50%;
-    padding: 12px 20px;
+    padding: 12px;
     margin: 8px 0;
     box-sizing: border-box;
-  }
-  
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #282c35;
+}
+
+input[type=text]:focus,
+input[type=number]:focus {
+    outline: none;
+    border: 1px solid #61dafb;
+}
