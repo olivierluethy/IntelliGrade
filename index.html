@@ -1,44 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <script defer src="script.js"></script>
+    <title>IntelliGrade</title>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>SchoolKid</title>
-</head>
-
-<body>
+  <body>
     <main>
-        <h1>IntelliGrade</h1>
+      <h1>IntelliGrade</h1>
 
-        <!-- Calculating grade based on points -->
-        <h2><u>Calculate Grade</u></h2>
-        <label for="">Enter earned points</label><br>
-        <input type="number" id="earnedPoints" oninput="calculateGrade()"><br><br>
+      <!-- Calculating grade based on points -->
+      <h2><u>Calculate Grade</u></h2>
+      <label for="">Enter earned points</label><br />
+      <input
+        type="number"
+        id="earnedPoints"
+        oninput="calculateGrade()"
+      /><br /><br />
 
-        <label for="">Enter max points</label><br>
-        <input type="number" id="maxPoints" oninput="calculateGrade()"><br>
+      <label for="">Enter max points</label><br />
+      <input type="number" id="maxPoints" oninput="calculateGrade()" /><br />
 
-        <p id="showGrade"></p>
+      <p id="showGrade"></p>
 
-        <!-- Calculating needed grade to get wished average -->
-        <h2><u>Calculate needed grade to get wished average</u></h2>
-        <button onclick="calculateAverageMarks()">Calculate needed grade to get wished average</button>
+      <!-- Calculating needed grade to get wished average -->
+      <h2><u>Calculate needed grade to get wished average</u></h2>
+      <button onclick="calculateAverageMarks()">Calculate</button>
 
-        <!-- Calculate Grade Increase or Decrease -->
-        <h2><u>Calculate grade increase or decrease</u></h2>
-        <label for="">Enter original grade</label><br>
-        <input type="number" placeholder="" id="original_grade" oninput="calculateGradeInDecrease()"><br><br>
+      <!-- Calculate Grade Increase or Decrease -->
+      <h2><u>Calculate grade increase or decrease in percentage (%)</u></h2>
+      <label for="">Enter original grade</label><br />
+      <input
+        type="number"
+        placeholder=""
+        id="original_grade"
+        oninput="calculateGradeInDecrease()"
+      /><br /><br />
 
-        <label for="">Enter the raised grade</label><br>
-        <input type="number" id="raised_grade" oninput="calculateGradeInDecrease()">
+      <label for="">Enter the raised grade</label><br />
+      <input
+        type="number"
+        id="raised_grade"
+        oninput="calculateGradeInDecrease()"
+      />
 
-        <p id="showIncrease"></p>
+      <p id="showIncrease"></p>
     </main>
-
-    <script src="script.js"></script>
-</body>
-
+  </body>
 </html>
