@@ -1,15 +1,10 @@
-# IntelliGrade
-
-An app that calculates a lot of important things with grades!
-
-## Overview
-
 <p align="center">
   <a href="https://github.com/olivierluethy/IntelliGrade">
     <img src="images/favicon.ico" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Welcome to IntelliGrade!</h3>
+  <p align="center">An app that calculates a lot of important things with grades!</p>
 </p>
 
 ## Features
