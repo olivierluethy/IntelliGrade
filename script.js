@@ -87,13 +87,13 @@ function calculateGradeInDecrease() {
     // If the increase is greater than 0, display the percentage increase with the text "It got increased by: "
     document.getElementById(
       "showIncrease"
-    ).innerHTML = `It got increased by: <span style="font-weight: bold;">${percentageIncrease}%</span>`;
+    ).innerHTML = `It got increased by: <span style="font-weight: bold;">${percentageIncrease.toFixed(2)}%</span>`;
   } else if (increase < 0) {
     // If the increase is less than 0, take the absolute value of the percentage increase and display it with the text "It got decreased by: "
     percentageIncrease = Math.abs(percentageIncrease);
     document.getElementById(
       "showIncrease"
-    ).innerHTML = `It got decreased by: <span style="font-weight: bold;">${percentageIncrease}%</span>`;
+    ).innerHTML = `It got decreased by: <span style="font-weight: bold;">${percentageIncrease.toFixed(2)}%</span>`;
   } else {
     // If the increase is equal to 0, display the text "There was no change."
     document.getElementById("showIncrease").innerHTML = `There was no change.`;
