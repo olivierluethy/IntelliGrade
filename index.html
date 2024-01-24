@@ -32,24 +32,44 @@
       <h2><u>Calculate needed grade to get wished average</u></h2>
       <button onclick="calculateAverageMarks()">Calculate</button>
 
-      <!-- Calculate Grade Increase or Decrease -->
-      <h2><u>Calculate grade increase or decrease in percentage (%)</u></h2>
-      <label for="">Enter original grade</label><br />
-      <input
-        type="number"
-        placeholder=""
-        id="original_grade"
-        oninput="calculateGradeInDecrease()"
-      /><br /><br />
+      <div class="flex-container">
+        <div class="flex-item">
+          <!-- Calculate Grade Increase or Decrease -->
+          <h2><u>Calculate grade increase or decrease in percentage (%)</u></h2>
+          <label for="">Enter original grade</label><br />
+          <input
+            type="number"
+            placeholder=""
+            id="original_grade"
+            oninput="calculateGradeInDecrease()"
+          /><br /><br />
+          <label for="">Enter the raised grade</label><br />
+          <input
+            type="number"
+            id="raised_grade"
+            oninput="calculateGradeInDecrease()"
+          />
+          <p id="showIncrease"></p>
+        </div>
 
-      <label for="">Enter the raised grade</label><br />
-      <input
-        type="number"
-        id="raised_grade"
-        oninput="calculateGradeInDecrease()"
-      />
-
-      <p id="showIncrease"></p>
+        <div class="flex-item">
+          <!-- Calculate older grade from grade increase percentage and newer grade -->
+          <h2><u>Calculate older grade by increased percentage (%)</u></h2>
+          <label for="">Enter received grade</label><br />
+          <input
+            type="number"
+            id="new_Grade"
+            oninput="calculateUpscale()"
+          /><br /><br />
+          <label for="">Enter raise percentage told by teacher</label><br />
+          <input
+            type="number"
+            id="raise_percentage"
+            oninput="calculateUpscale()"
+          />
+          <p id="showOriginalGrade"></p>
+        </div>
+      </div>
     </main>
   </body>
 </html>

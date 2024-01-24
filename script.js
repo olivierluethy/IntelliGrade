@@ -87,15 +87,39 @@ function calculateGradeInDecrease() {
     // If the increase is greater than 0, display the percentage increase with the text "It got increased by: "
     document.getElementById(
       "showIncrease"
-    ).innerHTML = `It got increased by: <span style="font-weight: bold;">${percentageIncrease.toFixed(2)}%</span>`;
+    ).innerHTML = `It got increased by: <span style="font-weight: bold;">${percentageIncrease.toFixed(
+      2
+    )}%</span>`;
   } else if (increase < 0) {
     // If the increase is less than 0, take the absolute value of the percentage increase and display it with the text "It got decreased by: "
     percentageIncrease = Math.abs(percentageIncrease);
     document.getElementById(
       "showIncrease"
-    ).innerHTML = `It got decreased by: <span style="font-weight: bold;">${percentageIncrease.toFixed(2)}%</span>`;
+    ).innerHTML = `It got decreased by: <span style="font-weight: bold;">${percentageIncrease.toFixed(
+      2
+    )}%</span>`;
   } else {
     // If the increase is equal to 0, display the text "There was no change."
     document.getElementById("showIncrease").innerHTML = `There was no change.`;
+  }
+  if (
+    document.getElementById("original_grade").value.trim() === "" &&
+    document.getElementById("raised_grade").value.trim() === ""
+  ) {
+    document.getElementById("showIncrease").innerHTML = ``;
+  }
+}
+function calculateUpscale() {
+  var new_Grade = parseFloat(document.getElementById("new_Grade").value);
+  var raise_percentage = parseFloat(
+    document.getElementById("raise_percentage").value
+  );
+
+  var old_grade = new_Grade - (new_Grade * raise_percentage) / 100;
+
+  if (!isNaN(old_grade)) {
+    document.getElementById("showOriginalGrade").innerHTML = old_grade;
+  } else {
+    document.getElementById("showOriginalGrade").innerHTML = "";
   }
 }
