@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   margin: 0;
   padding: 0;
@@ -6,13 +7,13 @@ body {
   background-size: cover;
   background-position: center;
   color: #fff;
+  /* Add Animation */
 }
-
-main {
+body main {
   margin: 2rem;
+  /* The Modal (background) */
 }
-
-button {
+body main button {
   background-color: #61dafb;
   border: none;
   color: #282c35;
@@ -26,23 +27,19 @@ button {
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }
-
-button:hover {
+body main button:hover {
   background-color: #4fa3d1;
 }
-
-.flex-container {
+body main .flex-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
-
-.flex-item {
+body main .flex-container .flex-item {
   width: 48%; /* Du kannst die Breite anpassen, um den Abstand zwischen den beiden Teilen zu ändern */
 }
-
-input[type="text"],
-input[type="number"] {
+body main input[type=text],
+body main input[type=number] {
   width: 50%;
   padding: 12px;
   margin: 8px 0;
@@ -52,9 +49,70 @@ input[type="number"] {
   background-color: #fff;
   color: #282c35;
 }
-
-input[type="text"]:focus,
-input[type="number"]:focus {
+body main input[type=text]:focus,
+body main input[type=number]:focus {
   outline: none;
   border: 1px solid #61dafb;
 }
+body main .modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  /* Modal Content */
+}
+body main .modal .modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+}
+body main .modal .modal-content .modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+  /* The Close Button */
+}
+body main .modal .modal-content .modal-header:hover, body main .modal .modal-content .modal-header:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+body main .modal .modal-content .modal-header .close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+body main .modal .modal-content .modal-body {
+  padding: 2px 16px;
+}
+body main .modal .modal-content .modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}/*# sourceMappingURL=style.css.map */
