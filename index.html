@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" href="images/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <script defer src="script.js"></script>
-    <script defer src="modal.js"></script>
+    <script defer src="neededGrade.js"></script>
     <title>IntelliGrade</title>
   </head>
 
@@ -31,7 +35,9 @@
 
       <!-- Calculating needed grade to get wished average -->
       <h2><u>Calculate needed grade to get wished average</u></h2>
-      <button onclick="calculateAverageMarks()">Calculate</button>
+      <!-- <button onclick="calculateAverageMarks()">Calculate</button> -->
+      <!-- Trigger/Open The Modal -->
+      <button id="myBtn">Calculate</button>
 
       <div class="flex-container">
         <div class="flex-item">
@@ -77,18 +83,38 @@
         <!-- Modal content -->
         <div class="modal-content">
           <div class="modal-header">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Enter Marks and Weights</h2>
+            <span class="close">&times;</span>
+            <h2>Enter all the grades</h2>
           </div>
           <div class="modal-body">
-            <div id="marksContainer">
-              <!-- Hier werden die Eingabefelder für Noten und Gewichtung hinzugefügt -->
+            <div
+              style="display: flex; align-items: center; margin-bottom: 10px"
+            >
+              <p style="margin-right: 10px; margin-top: 0">Enter your grade:</p>
+              <input
+                type="text"
+                placeholder="Enter grade and then hit (enter)"
+                style="margin-right: 20px"
+                id="grade"
+              />
+              <p style="margin-right: 10px; margin-top: 0">Weighting:</p>
+              <input
+                type="text"
+                placeholder="Half: 0.5; Totally: 1; Double; 2"
+              />
             </div>
-            <button onclick="addRow()">Add Row</button>
-            <button onclick="calculateAverageMarks()">Calculate Average</button>
-          </div>
-          <div class="modal-footer">
-            <h3>Modal Footer</h3>
+            <div style="display: flex">
+              <!-- Flexbox für die Schaltflächen und den zusätzlichen Text -->
+              <button>Finish</button>
+              <p style="margin-left: 5px">
+                <- If you have entered all your grades
+              </p>
+            </div>
+            <hr />
+
+            <div class="grades-container">
+              <!-- Hier werden die Input-Felder dynamisch hinzugefügt -->
+            </div>
           </div>
         </div>
       </div>

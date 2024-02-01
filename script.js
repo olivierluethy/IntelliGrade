@@ -6,7 +6,7 @@ function calculateGrade() {
     const grade = (earnedPoints * 5) / maxPoints + 1;
     document.getElementById(
       "showGrade"
-    ).innerHTML = `Your grade is: <b>${grade.toFixed(2)}<b>`;
+    ).innerHTML = `Your grade is: ${grade.toFixed(2)}`;
   } else {
     console.error("Invalid input. Please enter valid numeric values.");
   }
@@ -30,6 +30,39 @@ function calculateMagicMark(totalMarks, numMarks) {
     if (shouldCalculateAgain) {
       calculateAverageMarks();
     }
+  }
+}
+
+// Prompts the user to enter marks until they stop the input
+function calculateAverageMarks() {
+  let total_marks = 0;
+  let num_marks = 0;
+
+  // Loops until the user inputs 's' to stop
+  while (true) {
+    let mark = prompt("Type a mark ('s' to stop)");
+    if (mark === "s") {
+      calculateMagicMark(total_marks, num_marks);
+      break;
+    } else if (mark === null) {
+      break;
+    } else {
+      mark = parseFloat(mark);
+      if (isNaN(mark)) {
+        alert("Invalid input. Please enter a valid mark or 's' to stop.");
+      } else if (mark > 6) {
+        alert("Mark isn't valid");
+      } else {
+        total_marks += mark;
+        num_marks += 1;
+      }
+    }
+  }
+  if (num_marks > 0) {
+    let average = total_marks / num_marks;
+    alert("The average is " + average);
+  } else {
+    alert("No marks were entered");
   }
 }
 
