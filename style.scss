@@ -80,13 +80,15 @@ body {
         animation-duration: 0.4s;
         .modal-header {
           padding: 2px 16px;
-          background-color: #5cb85c;
+          background-color: #2f333b;
           color: white;
-          &:hover,
-          &:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
+          .close {
+            &:hover,
+            &:focus {
+              color: #000;
+              text-decoration: none;
+              cursor: pointer;
+            }
           }
           /* The Close Button */
           .close {
@@ -98,6 +100,16 @@ body {
         }
         .modal-body {
           padding: 2px 16px;
+          table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 1rem;
+          }
+          td,
+          th {
+            text-align: left;
+          }
           .grades-container {
             display: none;
             .grades-line {

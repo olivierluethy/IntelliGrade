@@ -83,11 +83,11 @@ body main .modal .modal-content {
 }
 body main .modal .modal-content .modal-header {
   padding: 2px 16px;
-  background-color: #5cb85c;
+  background-color: #2f333b;
   color: white;
   /* The Close Button */
 }
-body main .modal .modal-content .modal-header:hover, body main .modal .modal-content .modal-header:focus {
+body main .modal .modal-content .modal-header .close:hover, body main .modal .modal-content .modal-header .close:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
@@ -100,6 +100,16 @@ body main .modal .modal-content .modal-header .close {
 }
 body main .modal .modal-content .modal-body {
   padding: 2px 16px;
+}
+body main .modal .modal-content .modal-body table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 1rem;
+}
+body main .modal .modal-content .modal-body td,
+body main .modal .modal-content .modal-body th {
+  text-align: left;
 }
 body main .modal .modal-content .modal-body .grades-container {
   display: none;

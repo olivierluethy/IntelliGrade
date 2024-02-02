@@ -84,29 +84,34 @@
         <div class="modal-content">
           <div class="modal-header">
             <span class="close">&times;</span>
-            <h2>Enter all the grades</h2>
+            <h2>Enter all your grades</h2>
           </div>
           <div class="modal-body">
-            <div
-              style="display: flex; align-items: center; margin-bottom: 10px"
-            >
-              <p style="margin-right: 10px; margin-top: 0">Enter your grade:</p>
-              <input
-                type="number"
-                placeholder="Enter grade and then hit (enter)"
-                style="margin-right: 20px"
-                id="grade"
-              />
-              <p style="margin-right: 10px; margin-top: 0">Weighting:</p>
-              <input
-                type="number"
-                placeholder="Half: 0.5; Totally: 1; Double; 2"
-                id="weighting"
-              />
-            </div>
+            <table>
+              <tr>
+                <th>Grade</th>
+                <th>Weight</th>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="number"
+                    placeholder="Enter grade and then hit (enter)"
+                    id="grade"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    placeholder="Half: 0.5; Totally: 1; Double; 2"
+                    id="weighting"
+                  />
+                </td>
+              </tr>
+            </table>
             <div style="display: flex">
               <!-- Flexbox für die Schaltflächen und den zusätzlichen Text -->
-              <button>Finish</button>
+              <button onclick="calculateNeededGrade()">Finish</button>
               <p style="margin-left: 5px">
                 <- If you have entered all your grades
               </p>

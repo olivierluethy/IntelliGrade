@@ -1,68 +1,27 @@
 function calculateGrade() {
-  const earnedPoints = parseInt(document.getElementById("earnedPoints").value);
-  const maxPoints = parseInt(document.getElementById("maxPoints").value);
+  const earnedPoints = document.getElementById("earnedPoints").value.trim();
+  const maxPoints = document.getElementById("maxPoints").value.trim();
 
-  if (!isNaN(earnedPoints) && !isNaN(maxPoints) && maxPoints !== 0) {
-    const grade = (earnedPoints * 5) / maxPoints + 1;
+  if (earnedPoints === "" || maxPoints === "") {
+    document.getElementById("showGrade").innerHTML =
+      "Please enter values for earned points and max points.";
+    return;
+  }
+
+  const earnedPointsValue = parseInt(earnedPoints);
+  const maxPointsValue = parseInt(maxPoints);
+
+  if (
+    !isNaN(earnedPointsValue) &&
+    !isNaN(maxPointsValue) &&
+    maxPointsValue !== 0
+  ) {
+    const grade = (earnedPointsValue * 5) / maxPointsValue + 1;
     document.getElementById(
       "showGrade"
-    ).innerHTML = `Your grade is: ${grade.toFixed(2)}`;
+    ).innerHTML = `Your grade is: <b>${grade.toFixed(2)}</b>`;
   } else {
     console.error("Invalid input. Please enter valid numeric values.");
-  }
-}
-
-function calculateMagicMark(totalMarks, numMarks) {
-  const desiredAverage = prompt("Type your desired average");
-
-  if (desiredAverage === null) {
-    return; // User pressed cancel or closed the prompt
-  }
-
-  const magicMark = (numMarks + 1) * desiredAverage - totalMarks;
-
-  if (magicMark > 6) {
-    alert("The desired mark isn't possible");
-  } else {
-    alert(`You need a ${magicMark.toFixed(2)}`);
-    const shouldCalculateAgain = confirm("Calculate again or stop?");
-
-    if (shouldCalculateAgain) {
-      calculateAverageMarks();
-    }
-  }
-}
-
-// Prompts the user to enter marks until they stop the input
-function calculateAverageMarks() {
-  let total_marks = 0;
-  let num_marks = 0;
-
-  // Loops until the user inputs 's' to stop
-  while (true) {
-    let mark = prompt("Type a mark ('s' to stop)");
-    if (mark === "s") {
-      calculateMagicMark(total_marks, num_marks);
-      break;
-    } else if (mark === null) {
-      break;
-    } else {
-      mark = parseFloat(mark);
-      if (isNaN(mark)) {
-        alert("Invalid input. Please enter a valid mark or 's' to stop.");
-      } else if (mark > 6) {
-        alert("Mark isn't valid");
-      } else {
-        total_marks += mark;
-        num_marks += 1;
-      }
-    }
-  }
-  if (num_marks > 0) {
-    let average = total_marks / num_marks;
-    alert("The average is " + average);
-  } else {
-    alert("No marks were entered");
   }
 }
 

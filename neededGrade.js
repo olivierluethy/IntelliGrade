@@ -28,10 +28,14 @@ window.onclick = function (event) {
 var inputIdCounter = 1;
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Implement standart weighting of one, which is usual
+  document.getElementById("weighting").value = 1;
   // Füge das onkeypress-Ereignis hinzu
   document.addEventListener("keypress", function (event) {
     // Check if the pressed key is Enter
     if (event.key === "Enter") {
+      // Select the text inside the input field
+      document.getElementById("grade").select();
       var mark = document.getElementById("grade").value;
       var weight = document.getElementById("weighting").value;
 
@@ -85,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Add your icon to the span element
         // Example: using Font Awesome
         iconSpan.innerHTML =
-          "<i class='fa fa-close' style='margin-left: 2rem;'></i>"; // Adjust margin-left as needed
+          "<i class='fa fa-close' title='delete line' style='margin-left: 2rem;'></i>"; // Adjust margin-left as needed
 
         // Add click event listener to the icon to remove the line
         iconSpan.addEventListener("click", function () {
@@ -119,3 +123,70 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+/* Calculate needed grade to get wished average */
+function calculateNeededGrade() {
+  var gradesContainer = document.querySelector(".grades-container");
+
+  // Collect all grade-line elements
+  var gradeLines = gradesContainer.querySelectorAll(".grades-line");
+
+  // Initialize variables for total marks and total weight
+  var totalMarks = 0;
+  var totalWeight = 0;
+
+  // Iterate through each grade-line
+  gradeLines.forEach(function (gradeLine) {
+    // Get the grade and weight input fields within the current grade-line
+    var gradeInput = gradeLine.querySelector(
+      "input[type='number'][id^='gradeInput']"
+    );
+    var weightInput = gradeLine.querySelector(
+      "input[type='number'][id^='weightInput']"
+    );
+
+    // Check if both grade and weight inputs exist
+    if (gradeInput && weightInput) {
+      var grade = parseFloat(gradeInput.value);
+      var weight = parseFloat(weightInput.value);
+
+      // Check if grade and weight are valid numbers
+      if (!isNaN(grade) && !isNaN(weight)) {
+        // Accumulate total marks and total weight
+        totalMarks += grade * weight;
+        totalWeight += weight;
+      }
+    }
+  });
+
+  if (totalWeight > 0) {
+    var desiredAverageString = prompt("Which average do you wish to achieve?");
+    var desiredAverage = parseFloat(desiredAverageString);
+
+    // Check if desired average is achievable
+    if (desiredAverage >= totalMarks / totalWeight) {
+      var neededGrade = (desiredAverage * (totalWeight + 1) - totalMarks) / 1;
+
+      if (neededGrade > 6) {
+        alert(
+          "Your goal is not achievable!\n\n" +
+            "You would need a " +
+            neededGrade.toFixed(2) +
+            " which isn't achievable."
+        );
+      } else {
+        alert(
+          "To achieve the desired average of " +
+            desiredAverage +
+            "\n\n, You need a grade of " +
+            neededGrade.toFixed(2)
+        );
+      }
+    } else {
+      alert(
+        "Desired average is not achievable with the current grades and weights."
+      );
+    }
+  } else {
+    alert("No valid grades and weights entered.");
+  }
+}
