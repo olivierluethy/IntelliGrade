@@ -51,6 +51,9 @@ To check if it's a number or not
 JavaScript convert to float
 - https://www.google.com/search?q=javascript+convert+to+float&oq=javascript+convert+to+float&aqs=chrome..69i57.9452j0j1&sourceid=chrome&ie=UTF-8 <br>
 
+Formula used to calculate grades according to their weights
+- https://calculatodo.com/de/gewichteter-durchschnitt-der-noten-berechnen#:~:text=Mit%20anderen%20Worten%2C%20es%20handelt,54)%20%2F%204%20%3D%2058.<br>
+
 Close icon
 - https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-close<br>
 
