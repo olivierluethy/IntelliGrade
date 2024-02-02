@@ -57,7 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
           gradesContainer.style.overflowY = "auto";
         } else {
           gradesContainer.style.overflowY = "none";
-          gradesContainer.style.height = currentHeight + 62 + "px";
         }
 
         // Create a container for the line of elements
@@ -95,13 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
         iconSpan.addEventListener("click", function () {
           // Remove the entire line container
           gradesLineContainer.remove();
-
-          // Get the height of the line container being removed
-          var lineContainerHeight = gradesLineContainer.offsetHeight;
-
-          // Reduce the height of the gradesContainer by the height of the removed line container
-          gradesContainer.style.height =
-            currentHeight - lineContainerHeight + "px";
         });
 
         // Append the icon span after the weight input field
@@ -109,10 +101,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Append the entire gradesLineContainer to the gradesContainer
         gradesContainer.appendChild(gradesLineContainer);
-
-        // Add a line break
-        var lineBreak = document.createElement("br");
-        gradesContainer.appendChild(lineBreak);
 
         // Increment the input ID counter for the next elements
         inputIdCounter++;
