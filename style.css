@@ -1,4 +1,25 @@
-body {
+@charset "UTF-8";
+* {
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+* ::-webkit-scrollbar {
+  width: 20px;
+}
+* ::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #2f333b;
+  border-radius: 10px;
+}
+* ::-webkit-scrollbar-thumb {
+  background: #2f333b;
+  border-radius: 10px;
+}
+* ::-webkit-scrollbar-thumb:hover {
+  background: gray;
+}
+* body {
   margin: 0;
   padding: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -6,13 +27,13 @@ body {
   background-size: cover;
   background-position: center;
   color: #fff;
+  /* Add Animation */
 }
-
-main {
+* body main {
   margin: 2rem;
+  /* The Modal (background) */
 }
-
-button {
+* body main button {
   background-color: #61dafb;
   border: none;
   color: #282c35;
@@ -26,23 +47,19 @@ button {
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }
-
-button:hover {
+* body main button:hover {
   background-color: #4fa3d1;
 }
-
-.flex-container {
+* body main .flex-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
-
-.flex-item {
+* body main .flex-container .flex-item {
   width: 48%; /* Du kannst die Breite anpassen, um den Abstand zwischen den beiden Teilen zu ändern */
 }
-
-input[type="text"],
-input[type="number"] {
+* body main input[type=text],
+* body main input[type=number] {
   width: 50%;
   padding: 12px;
   margin: 8px 0;
@@ -52,9 +69,102 @@ input[type="number"] {
   background-color: #fff;
   color: #282c35;
 }
-
-input[type="text"]:focus,
-input[type="number"]:focus {
+* body main input[type=text]:focus,
+* body main input[type=number]:focus {
   outline: none;
   border: 1px solid #61dafb;
 }
+* body main .modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.8); /* Black with 50% opacity */
+  color: black;
+  /* Modal Content */
+}
+* body main .modal .modal-content {
+  box-shadow: 1px 1px 81px 3px rgba(255, 255, 255, 0.75);
+  -webkit-box-shadow: 1px 1px 81px 3px rgba(255, 255, 255, 0.75);
+  -moz-box-shadow: 1px 1px 81px 3px rgba(255, 255, 255, 0.75);
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 50%;
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+}
+* body main .modal .modal-content .modal-header {
+  padding: 2px 16px;
+  background-color: #2f333b;
+  color: white;
+  /* The Close Button */
+}
+* body main .modal .modal-content .modal-header .close:hover, * body main .modal .modal-content .modal-header .close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+* body main .modal .modal-content .modal-header .close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+* body main .modal .modal-content .modal-body {
+  padding: 2px 16px;
+}
+* body main .modal .modal-content .modal-body table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 1rem;
+}
+* body main .modal .modal-content .modal-body table tr td img {
+  margin-bottom: -0.7rem;
+  width: 5%;
+}
+* body main .modal .modal-content .modal-body td,
+* body main .modal .modal-content .modal-body th {
+  text-align: left;
+}
+* body main .modal .modal-content .modal-body .grades-container {
+  display: block;
+  height: 300px;
+}
+* body main .modal .modal-content .modal-body .grades-container .delete-icon i {
+  width: 20px;
+  font-size: 25px;
+  color: red;
+  cursor: pointer;
+}
+* body main .modal .modal-content .modal-body .grades-container .delete-icon i:hover {
+  height: 25px;
+  width: 25px;
+  background-color: lightblue;
+  border-radius: 50%;
+  display: inline-block;
+}
+* body main .modal .modal-content .modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}/*# sourceMappingURL=style.css.map */

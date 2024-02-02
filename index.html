@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" href="images/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <script defer src="script.js"></script>
+    <script defer src="neededGrade.js"></script>
     <title>IntelliGrade</title>
   </head>
 
@@ -30,7 +35,9 @@
 
       <!-- Calculating needed grade to get wished average -->
       <h2><u>Calculate needed grade to get wished average</u></h2>
-      <button onclick="calculateAverageMarks()">Calculate</button>
+      <!-- <button onclick="calculateAverageMarks()">Calculate</button> -->
+      <!-- Trigger/Open The Modal -->
+      <button id="myBtn">Calculate</button>
 
       <div class="flex-container">
         <div class="flex-item">
@@ -68,6 +75,58 @@
             oninput="calculateUpscale()"
           />
           <p id="showOriginalGrade"></p>
+        </div>
+      </div>
+
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Enter all your grades</h2>
+          </div>
+          <div class="modal-body">
+            <table>
+              <tr>
+                <th>Grade</th>
+                <th>Weight</th>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="number"
+                    placeholder="Enter grade and then hit (enter)"
+                    id="grade"
+                  />
+                  <img src="images/enter.png" alt="" />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    placeholder="Half: 0.5; Totally: 1; Double; 2"
+                    id="weighting"
+                  />
+                </td>
+              </tr>
+            </table>
+            <div style="display: flex">
+              <!-- Flexbox für die Schaltflächen und den zusätzlichen Text -->
+              <button onclick="calculateNeededGrade()">Finish</button>
+              <p style="margin-left: 5px">
+                <- When you have entered all your grades below.
+              </p>
+            </div>
+            <hr
+              style="
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1); /* Horizontal offset, vertical offset, blur radius, and color */
+              "
+            />
+
+            <div class="grades-container">
+              <!-- Hier werden die Input-Felder dynamisch hinzugefügt -->
+            </div>
+          </div>
         </div>
       </div>
     </main>
