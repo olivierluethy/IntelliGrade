@@ -100,7 +100,24 @@ body {
           padding: 2px 16px;
           .grades-container {
             display: none;
-            // height: 35px;
+            .grades-line {
+              margin-bottom: -1rem;
+            }
+            .delete-icon {
+              i {
+                width: 20px;
+                font-size: 25px;
+                color: red;
+                cursor: pointer;
+                &:hover {
+                  height: 25px;
+                  width: 25px;
+                  background-color: lightblue;
+                  border-radius: 50%;
+                  display: inline-block;
+                }
+              }
+            }
           }
         }
         .modal-footer {
