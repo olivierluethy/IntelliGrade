@@ -162,22 +162,28 @@ function calculateNeededGrade() {
     var desiredAverageString = prompt("Which average do you wish to achieve?");
     var desiredAverage = parseFloat(desiredAverageString);
 
-    // Check if desired average is achievable
+    var desiredWeightString = prompt("What is the weight for the next exam?");
+    var desiredWeight = parseFloat(desiredWeightString);
+
+    // Überprüfen, ob der gewünschte Durchschnitt erreichbar ist
     if (desiredAverage >= totalMarks / totalWeight) {
-      var neededGrade = (desiredAverage * (totalWeight + 1) - totalMarks) / 1;
+      // Berechnung der benötigten Note unter Berücksichtigung der Gewichtung
+      var neededGrade =
+        (desiredAverage * (totalWeight + desiredWeight) - totalMarks) /
+        desiredWeight;
 
       if (neededGrade > 6) {
         alert(
           "Your goal is not achievable!\n\n" +
-            "You would need a " +
+            "You would need a grade of " +
             neededGrade.toFixed(2) +
             " which isn't achievable."
         );
       } else {
         alert(
           "To achieve the desired average of " +
-            desiredAverage +
-            "\n\n, You need a grade of " +
+            desiredAverage.toFixed(2) +
+            ", you need a grade of " +
             neededGrade.toFixed(2)
         );
       }
