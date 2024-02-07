@@ -1,0 +1,234 @@
+* {
+    /* width */
+     ::-webkit-scrollbar {
+        width: 10px;
+    }
+    /* Track */
+     ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px #2f333b;
+        border-radius: 10px;
+    }
+    /* Handle */
+     ::-webkit-scrollbar-thumb {
+        background: #2f333b;
+        border-radius: 10px;
+    }
+    /* Handle on hover */
+     ::-webkit-scrollbar-thumb:hover {
+        background: gray;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-image: url("/images/background.png");
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        main {
+            margin: 2rem;
+            button {
+                background-color: #61dafb;
+                border: none;
+                color: #282c35;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 4px;
+                transition: background-color 0.3s ease;
+                &:hover {
+                    background-color: #4fa3d1;
+                }
+            }
+            .flex-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                .flex-item {
+                    width: 48%;
+                    /* Du kannst die Breite anpassen, um den Abstand zwischen den beiden Teilen zu ändern */
+                }
+            }
+            input[type="text"],
+            input[type="number"] {
+                width: 50%;
+                padding: 12px;
+                margin: 8px 0;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background-color: #fff;
+                color: #282c35;
+                &:focus {
+                    outline: none;
+                    border: 1px solid #61dafb;
+                }
+            }
+            /* The Modal (background) */
+            .modal {
+                display: none;
+                /* Hidden by default */
+                position: fixed;
+                /* Stay in place */
+                z-index: 1;
+                /* Sit on top */
+                padding-top: 100px;
+                /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%;
+                /* Full width */
+                height: 100%;
+                /* Full height */
+                background-color: rgba(0, 0, 0, 0.8);
+                /* Black with 50% opacity */
+                color: black;
+                /* Modal Content */
+                .modal-content {
+                    box-shadow: 1px 1px 81px 3px rgba(255, 255, 255, 0.75);
+                    -webkit-box-shadow: 1px 1px 81px 3px rgba(255, 255, 255, 0.75);
+                    -moz-box-shadow: 1px 1px 81px 3px rgba(255, 255, 255, 0.75);
+                    position: relative;
+                    background-color: #fefefe;
+                    margin: auto;
+                    padding: 0;
+                    border: 1px solid #888;
+                    width: 50%;
+                    -webkit-animation-name: animatetop;
+                    -webkit-animation-duration: 0.4s;
+                    animation-name: animatetop;
+                    animation-duration: 0.4s;
+                    .modal-header {
+                        padding: 2px 16px;
+                        background-color: #2f333b;
+                        color: white;
+                        .close {
+                            &:hover,
+                            &:focus {
+                                color: gray;
+                                text-decoration: none;
+                                cursor: pointer;
+                            }
+                        }
+                        /* The Close Button */
+                        .close {
+                            color: white;
+                            float: right;
+                            font-size: 28px;
+                            font-weight: bold;
+                        }
+                    }
+                    .modal-body {
+                        padding: 2px 16px;
+                        table {
+                            font-family: arial, sans-serif;
+                            border-collapse: collapse;
+                            width: 100%;
+                            margin-top: 1rem;
+                            tr {
+                                td {
+                                    img {
+                                        margin-bottom: -0.7rem;
+                                        width: 5%;
+                                    }
+                                }
+                            }
+                        }
+                        td,
+                        th {
+                            text-align: left;
+                        }
+                        .grades-container {
+                            display: block;
+                            height: 300px;
+                            .grades-line {
+                                border: 1px solid black;
+                                .delete-icon {
+                                    position: relative;
+                                    /* Add relative positioning to the container */
+                                    i {
+                                        width: 30px;
+                                        /* Set height to match width */
+                                        font-size: 30px;
+                                        color: red;
+                                        cursor: pointer;
+                                        display: inline-block;
+                                        /* Ensure the icon is block-level */
+                                        &:hover {
+                                            background-color: lightblue;
+                                            border-radius: 50%;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .modal-footer {
+                        padding: 2px 16px;
+                        background-color: #5cb85c;
+                        color: white;
+                    }
+                }
+            }
+        }
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0;
+            }
+            to {
+                top: 0;
+                opacity: 1;
+            }
+        }
+        @keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0;
+            }
+            to {
+                top: 0;
+                opacity: 1;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        main {
+            margin: 1rem;
+            /* Adjust margins for smaller screens */
+            button {
+                font-size: 14px;
+                /* Decrease button font size for smaller screens */
+            }
+            .flex-container {
+                flex-direction: column;
+                /* Stack flex items vertically on smaller screens */
+                .flex-item {
+                    width: 100%;
+                    /* Full width for flex items on smaller screens */
+                    margin-bottom: 1rem;
+                    /* Add margin between flex items */
+                }
+            }
+            input[type="text"],
+            input[type="number"] {
+                width: 100%;
+                /* Full width for input fields on smaller screens */
+            }
+            .modal {
+                .modal-content {
+                    width: 80%;
+                    /* Adjust modal width for smaller screens */
+                }
+            }
+        }
+    }
+}
