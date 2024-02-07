@@ -29,9 +29,8 @@
 
         <!-- Calculating needed grade to get wished average -->
         <h2><u>Calculate needed grade to get wished average</u></h2>
-        <!-- <button onclick="calculateAverageMarks()">Calculate</button> -->
         <!-- Trigger/Open The Modal -->
-        <button id="myBtn">Calculate</button>
+        <button id="modalCalculator">Calculate</button>
 
         <div class="flex-container">
             <div class="flex-item">
@@ -64,7 +63,7 @@
                     <h2>Enter all your grades</h2>
                 </div>
                 <div class="modal-body">
-                    <table>
+                    <table id="titleInput">
                         <tr>
                             <th>Grade</th>
                             <th>Weight</th>
@@ -79,16 +78,19 @@
                             </td>
                         </tr>
                     </table>
-                    <div style="display: flex">
+                    <div class="finish">
                         <!-- Flexbox für die Schaltflächen und den zusätzlichen Text -->
                         <button title="When you have entered all your grades below." onclick="calculateNeededGrade()">Finish</button>
                     </div>
-                    <hr style="
-                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1); /* Horizontal offset, vertical offset, blur radius, and color */
-              " />
-
-                    <div class="grades-container">
-                        <!-- Hier werden die Input-Felder dynamisch hinzugefügt -->
+                    <hr/>
+                    <div id="gradesTable-container">
+                        <table id="gradesTable">
+                            <tr style="visibility: hidden;">
+                                <th>Grade</th>
+                                <th>Weight</th>
+                                <th>Action</th>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>

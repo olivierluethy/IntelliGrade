@@ -130,13 +130,13 @@
 * body main .modal .modal-content .modal-body {
   padding: 2px 16px;
 }
-* body main .modal .modal-content .modal-body table {
+* body main .modal .modal-content .modal-body #titleInput {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
   margin-top: 1rem;
 }
-* body main .modal .modal-content .modal-body table tr td img {
+* body main .modal .modal-content .modal-body #titleInput tr td img {
   margin-bottom: -0.7rem;
   width: 5%;
 }
@@ -144,29 +144,38 @@
 * body main .modal .modal-content .modal-body th {
   text-align: left;
 }
-* body main .modal .modal-content .modal-body .grades-container {
-  display: block;
-  height: 300px;
+* body main .modal .modal-content .modal-body #gradesTable-container {
+  height: 350px;
+  /* Set the fixed height for the container */
+  overflow: auto;
+  /* Enable scrolling for content exceeding the container's height */
 }
-* body main .modal .modal-content .modal-body .grades-container .grades-line {
-  border: 1px solid black;
+* body main .modal .modal-content .modal-body #gradesTable-container #gradesTable {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  /* Enable vertical scrolling if the content exceeds the maximum height */
 }
-* body main .modal .modal-content .modal-body .grades-container .grades-line .delete-icon {
-  position: relative;
-  /* Add relative positioning to the container */
+* body main .modal .modal-content .modal-body #gradesTable-container #gradesTable td,
+* body main .modal .modal-content .modal-body #gradesTable-container #gradesTable th {
+  padding: 8px;
+  text-align: center;
 }
-* body main .modal .modal-content .modal-body .grades-container .grades-line .delete-icon i {
-  width: 30px;
-  /* Set height to match width */
-  font-size: 30px;
+* body main .modal .modal-content .modal-body #gradesTable-container #gradesTable .delete-icon {
   color: red;
   cursor: pointer;
-  display: inline-block;
-  /* Ensure the icon is block-level */
+  width: 50px;
+  font-size: 50px;
 }
-* body main .modal .modal-content .modal-body .grades-container .grades-line .delete-icon i:hover {
-  background-color: lightblue;
+* body main .modal .modal-content .modal-body #gradesTable-container #gradesTable .delete-icon:hover {
+  background-color: #b3e6ff;
   border-radius: 50%;
+}
+* body main .modal .modal-content .modal-body .finish {
+  display: flex;
+}
+* body main .modal .modal-content .modal-body hr {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 * body main .modal .modal-content .modal-footer {
   padding: 2px 16px;

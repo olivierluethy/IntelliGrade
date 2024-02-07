@@ -124,7 +124,7 @@
                     }
                     .modal-body {
                         padding: 2px 16px;
-                        table {
+                        #titleInput {
                             font-family: arial, sans-serif;
                             border-collapse: collapse;
                             width: 100%;
@@ -142,29 +142,38 @@
                         th {
                             text-align: left;
                         }
-                        .grades-container {
-                            display: block;
-                            height: 300px;
-                            .grades-line {
-                                border: 1px solid black;
+                        #gradesTable-container {
+                            height: 350px;
+                            /* Set the fixed height for the container */
+                            overflow: auto;
+                            /* Enable scrolling for content exceeding the container's height */
+                            #gradesTable {
+                                font-family: arial, sans-serif;
+                                border-collapse: collapse;
+                                width: 100%;
+                                /* Enable vertical scrolling if the content exceeds the maximum height */
+                                td,
+                                th {
+                                    padding: 8px;
+                                    text-align: center;
+                                }
                                 .delete-icon {
-                                    position: relative;
-                                    /* Add relative positioning to the container */
-                                    i {
-                                        width: 30px;
-                                        /* Set height to match width */
-                                        font-size: 30px;
-                                        color: red;
-                                        cursor: pointer;
-                                        display: inline-block;
-                                        /* Ensure the icon is block-level */
-                                        &:hover {
-                                            background-color: lightblue;
-                                            border-radius: 50%;
-                                        }
-                                    }
+                                    color: red;
+                                    cursor: pointer;
+                                    width: 50px;
+                                    font-size: 50px;
+                                }
+                                .delete-icon:hover {
+                                    background-color: #b3e6ff;
+                                    border-radius: 50%;
                                 }
                             }
+                        }
+                        .finish {
+                            display: flex;
+                        }
+                        hr {
+                            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
                         }
                     }
                     .modal-footer {
