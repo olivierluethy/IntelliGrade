@@ -46,6 +46,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 alert("Enter a grade");
             } else if (weight === "" && mark !== "") {
                 alert("Enter a weight");
+            } else if (mark < 1 || mark > 6) {
+                alert("Enter a valid grade (Swiss format: 1 worst; 6 best)");
             } else {
                 var table = document.getElementById("gradesTable");
 
