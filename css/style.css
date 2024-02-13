@@ -144,6 +144,11 @@
 * body main .modal .modal-content .modal-body th {
   text-align: left;
 }
+* body main .modal .modal-content .modal-body th {
+  background: white;
+  position: sticky;
+  top: 0;
+}
 * body main .modal .modal-content .modal-body #gradesTable-container {
   height: 350px;
   /* Set the fixed height for the container */
@@ -155,6 +160,14 @@
   border-collapse: collapse;
   width: 100%;
   /* Enable vertical scrolling if the content exceeds the maximum height */
+}
+* body main .modal .modal-content .modal-body #gradesTable-container #gradesTable tr:first-child {
+  background: white;
+  position: sticky;
+  top: 0;
+  box-shadow: -1px 3px 18px -6px rgba(47, 51, 59, 0.7);
+  -webkit-box-shadow: -1px 3px 18px -6px rgba(47, 51, 59, 0.7);
+  -moz-box-shadow: -1px 3px 18px -6px rgba(47, 51, 59, 0.7);
 }
 * body main .modal .modal-content .modal-body #gradesTable-container #gradesTable td,
 * body main .modal .modal-content .modal-body #gradesTable-container #gradesTable th {

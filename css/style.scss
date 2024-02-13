@@ -142,6 +142,11 @@
                         th {
                             text-align: left;
                         }
+                        th {
+                            background: white;
+                            position: sticky;
+                            top: 0;
+                        }
                         #gradesTable-container {
                             height: 350px;
                             /* Set the fixed height for the container */
@@ -151,6 +156,14 @@
                                 font-family: arial, sans-serif;
                                 border-collapse: collapse;
                                 width: 100%;
+                                tr:first-child {
+                                    background: white;
+                                    position: sticky;
+                                    top: 0;
+                                    box-shadow: -1px 3px 18px -6px rgba(47, 51, 59, 0.7);
+                                    -webkit-box-shadow: -1px 3px 18px -6px rgba(47, 51, 59, 0.7);
+                                    -moz-box-shadow: -1px 3px 18px -6px rgba(47, 51, 59, 0.7);
+                                }
                                 /* Enable vertical scrolling if the content exceeds the maximum height */
                                 td,
                                 th {
