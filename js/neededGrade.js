@@ -134,6 +134,9 @@ function calculateNeededGrade() {
         }
     }
 
+    alert("Total marks: " + totalMarks)
+    alert("Total weights: " + totalWeight)
+
     if (totalWeight > 0) {
         var desiredAverageString = prompt("Which average do you wish to achieve?");
         var desiredAverage = parseFloat(desiredAverageString);
@@ -141,31 +144,25 @@ function calculateNeededGrade() {
         var desiredWeightString = prompt("What is the weight for the next exam?");
         var desiredWeight = parseFloat(desiredWeightString);
 
-        // Check if the desired average is achievable
-        if (desiredAverage >= totalMarks / totalWeight) {
-            // Calculate the needed grade considering the weighting
-            var neededGrade =
-                (desiredAverage * (totalWeight + desiredWeight) - totalMarks) /
-                desiredWeight;
+        alert("Desired Average: " + desiredAverage)
+        alert("Desired Weight: " + desiredWeight)
 
-            if (neededGrade > 6) {
-                alert(
-                    "Your goal is not achievable!\n\n" +
-                    "You would need a grade of " +
-                    neededGrade.toFixed(2) +
-                    " which isn't achievable."
-                );
-            } else {
-                alert(
-                    "To achieve the desired average of " +
-                    desiredAverage.toFixed(2) +
-                    ", you need a grade of " +
-                    neededGrade.toFixed(2)
-                );
-            }
+        // Calculate the needed grade considering the weighting
+        var neededGrade = (desiredAverage * (totalWeight + desiredWeight) - totalMarks) / desiredWeight;
+
+        if (neededGrade > 6) {
+            alert(
+                "Your goal is not achievable!\n\n" +
+                "You would need a grade of " +
+                neededGrade.toFixed(2) +
+                " which isn't achievable."
+            );
         } else {
             alert(
-                "Desired average is not achievable with the current grades and weights."
+                "To achieve the desired average of " +
+                desiredAverage.toFixed(2) +
+                ", you need a grade of " +
+                neededGrade.toFixed(2)
             );
         }
     } else {
