@@ -134,8 +134,8 @@ function calculateNeededGrade() {
         }
     }
 
-    alert("Total marks: " + totalMarks)
-    alert("Total weights: " + totalWeight)
+    // alert("Total marks: " + totalMarks)
+    // alert("Total weights: " + totalWeight)
 
     if (totalWeight > 0) {
         var desiredAverageString = prompt("Which average do you wish to achieve?");
@@ -144,8 +144,8 @@ function calculateNeededGrade() {
         var desiredWeightString = prompt("What is the weight for the next exam?");
         var desiredWeight = parseFloat(desiredWeightString);
 
-        alert("Desired Average: " + desiredAverage)
-        alert("Desired Weight: " + desiredWeight)
+        // alert("Desired Average: " + desiredAverage)
+        // alert("Desired Weight: " + desiredWeight)
 
         // Calculate the needed grade considering the weighting
         var neededGrade = (desiredAverage * (totalWeight + desiredWeight) - totalMarks) / desiredWeight;
