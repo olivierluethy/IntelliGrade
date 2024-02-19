@@ -39,14 +39,14 @@ document.addEventListener("DOMContentLoaded", function () {
         gradeInput.value = mark || ""; // Set value if provided
         cell1.appendChild(gradeInput);
 
-        var weightInput = document.createElement("input");
+        const weightInput = document.createElement("input");
         weightInput.type = "number";
         weightInput.value = weight || ""; // Set value if provided
         cell2.appendChild(weightInput);
 
         // Create delete icon
-        var deleteIcon = document.createElement("i");
-        deleteIcon.classList.add("fa", "fa-close", "delete-icon");
+        const deleteIcon = document.createElement("i");
+        deleteIcon.className = "fa fa-close delete-icon";
         deleteIcon.style.fontSize = "50px";
         deleteIcon.title = "Delete line";
 

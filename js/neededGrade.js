@@ -35,33 +35,29 @@ function calculateNeededGrade() {
   }
 
   if (totalWeight > 0) {
-    var desiredAverageString = prompt("Which average do you wish to achieve?");
-    var desiredAverage = parseFloat(desiredAverageString);
+    const desiredAverage = parseFloat(prompt("Desired average?"));
+    const desiredWeight = parseFloat(prompt("Weight for next exam?"));
 
-    var desiredWeightString = prompt("What is the weight for the next exam?");
-    var desiredWeight = parseFloat(desiredWeightString);
-
-    // Calculate the needed grade considering the weighting
-    var neededGrade =
+    const neededGrade =
       (desiredAverage * (totalWeight + desiredWeight) - totalMarks) /
       desiredWeight;
 
     if (neededGrade > 6) {
       alert(
-        "Your goal is not achievable!\n\n" +
-          "You would need a grade of " +
+        "Unrealistic goal! You'd need a grade of " +
           neededGrade.toFixed(2) +
-          " which isn't achievable."
+          "%."
       );
     } else {
       alert(
-        "To achieve the desired average of " +
+        "To achieve " +
           desiredAverage.toFixed(2) +
           ", you need a grade of " +
-          neededGrade.toFixed(2)
+          neededGrade.toFixed(2) +
+          "%."
       );
     }
   } else {
-    alert("No valid grades and weights entered.");
+    alert("Invalid grades or weights.");
   }
 }
