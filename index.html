@@ -1,101 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="shortcut icon" href="images/favicon.ico" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <script defer src="js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script defer src="js/main.js"></script>
+    <script defer src="js/basic-calculations.js"></script>
+    <script defer src="js/modalGenerateTable.js"></script>
     <script defer src="js/neededGrade.js"></script>
+    <script defer src="js/pdfMaker.js"></script>
     <title>IntelliGrade</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <main>
-        <h1>IntelliGrade</h1>
+      <h1>IntelliGrade</h1>
 
-        <!-- Calculating grade based on points -->
-        <h2><u>Calculate Grade</u></h2>
-        <label for="">Enter earned points</label><br />
-        <input type="number" id="earnedPoints" oninput="calculateGrade()" /><br /><br />
+      <!-- Calculating grade based on points -->
+      <h2><u>Calculate Grade</u></h2>
+      <label for="">Enter earned points</label><br />
+      <input
+        type="number"
+        id="earnedPoints"
+        oninput="calculateGrade()"
+      /><br /><br />
 
-        <label for="">Enter max points</label><br />
-        <input type="number" id="maxPoints" oninput="calculateGrade()" /><br />
+      <label for="">Enter max points</label><br />
+      <input type="number" id="maxPoints" oninput="calculateGrade()" /><br />
 
-        <p id="showGrade"></p>
+      <p id="showGrade"></p>
 
-        <!-- Calculating needed grade to get wished average -->
-        <h2><u>Calculate needed grade to get wished average</u></h2>
-        <!-- Trigger/Open The Modal -->
-        <button id="modalCalculator">Calculate</button>
+      <!-- Calculating needed grade to get wished average -->
+      <h2><u>Calculate needed grade to get wished average</u></h2>
+      <!-- Trigger/Open The Modal -->
+      <button id="modalCalculator">Calculate</button>
 
-        <div class="flex-container">
-            <div class="flex-item">
-                <!-- Calculate Grade Increase or Decrease -->
-                <h2><u>Calculate grade increase or decrease in percentage (%)</u></h2>
-                <label for="">Enter original grade</label><br />
-                <input type="number" placeholder="" id="original_grade" oninput="calculateGradeInDecrease()" /><br /><br />
-                <label for="">Enter the raised grade</label><br />
-                <input type="number" id="raised_grade" oninput="calculateGradeInDecrease()" />
-                <p id="showIncrease"></p>
-            </div>
-
-            <div class="flex-item">
-                <!-- Calculate older grade from grade increase percentage and newer grade -->
-                <h2><u>Calculate older grade by increased percentage (%)</u></h2>
-                <label for="">Enter received grade</label><br />
-                <input type="number" id="new_Grade" oninput="calculateUpscale()" /><br /><br />
-                <label for="">Enter raise percentage told by teacher</label><br />
-                <input type="number" id="raise_percentage" oninput="calculateUpscale()" />
-                <p id="showOriginalGrade"></p>
-            </div>
+      <div class="flex-container">
+        <div class="flex-item">
+          <!-- Calculate Grade Increase or Decrease -->
+          <h2><u>Calculate grade increase or decrease in percentage (%)</u></h2>
+          <label for="">Enter original grade</label><br />
+          <input
+            type="number"
+            placeholder=""
+            id="original_grade"
+            oninput="calculateGradeInDecrease()"
+          /><br /><br />
+          <label for="">Enter the raised grade</label><br />
+          <input
+            type="number"
+            id="raised_grade"
+            oninput="calculateGradeInDecrease()"
+          />
+          <p id="showIncrease"></p>
         </div>
 
-        <!-- The Modal -->
-        <div id="myModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span title="To close this window" class="close">&times;</span>
-                    <h2>Enter all your grades</h2>
-                </div>
-                <div class="modal-body">
-                    <table id="titleInput">
-                        <tr>
-                            <th>Grade</th>
-                            <th>Weight</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="number" placeholder="Enter grade and then hit (enter)" id="grade" />
-                                <img title="Add your grade by hitting the enter key" src="images/enter.png" alt="" />
-                            </td>
-                            <td>
-                                <input type="number" placeholder="Half: 0.5; Totally: 1; Double; 2" id="weighting" />
-                            </td>
-                        </tr>
-                    </table>
-                    <div class="finish">
-                        <!-- Flexbox für die Schaltflächen und den zusätzlichen Text -->
-                        <button title="When you have entered all your grades below." onclick="calculateNeededGrade()">Finish</button>
-                    </div>
-                    <hr/>
-                    <div id="gradesTable-container">
-                        <table id="gradesTable">
-                            <tr style="visibility: hidden;">
-                                <th>Grade</th>
-                                <th>Weight</th>
-                                <th>Action</th>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div class="flex-item">
+          <!-- Calculate older grade from grade increase percentage and newer grade -->
+          <h2><u>Calculate older grade by increased percentage (%)</u></h2>
+          <label for="">Enter received grade</label><br />
+          <input
+            type="number"
+            id="new_Grade"
+            oninput="calculateUpscale()"
+          /><br /><br />
+          <label for="">Enter raise percentage told by teacher</label><br />
+          <input
+            type="number"
+            id="raise_percentage"
+            oninput="calculateUpscale()"
+          />
+          <p id="showOriginalGrade"></p>
         </div>
+      </div>
+
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <span title="To close this window" class="close">&times;</span>
+            <h2>Enter all your grades</h2>
+          </div>
+          <div class="modal-body">
+            <table id="titleInput">
+              <tr>
+                <th>Grade</th>
+                <th>Weight</th>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="number"
+                    placeholder="Enter grade and then hit (enter)"
+                    id="grade"
+                  />
+                  <img
+                    title="Add your grade by hitting the enter key"
+                    src="images/enter.png"
+                    alt=""
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    placeholder="Half: 0.5; Totally: 1; Double; 2"
+                    id="weighting"
+                  />
+                </td>
+              </tr>
+            </table>
+            <div class="finish">
+              <!-- Flexbox für die Schaltflächen und den zusätzlichen Text -->
+              <button
+                class="fa fa-flag-checkered finishBtn"
+                title="When you have entered all your grades below."
+                onclick="calculateNeededGrade()"
+              >
+                Finish
+              </button>
+              <button
+                class="fa fa-download dwnPDF"
+                title="If you want to download this table down below"
+              >
+                Download PDF
+              </button>
+            </div>
+            <hr />
+            <div id="gradesTable-container">
+              <table id="gradesTable">
+                <tr style="visibility: hidden">
+                  <th>Grade</th>
+                  <th>Weight</th>
+                  <th>Action</th>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
-</body>
-
+    <!-- The Modal -->
+    <div id="ModalPDFPreview" class="modalPDF">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="closePDF" title="Close pdf preview">&times;</span>
+          <h1>PDF Preview</h1>
+        </div>
+        <div id="iframeContainer">
+          <iframe id="pdfPreview"></iframe>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
