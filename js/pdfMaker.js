@@ -14,7 +14,7 @@ document.querySelector(".dwnPDF").addEventListener("click", function () {
     var backgroundImage = new Image();
 
     // Specify the path to your image
-    backgroundImage.src = "../images/watermark.png";
+    backgroundImage.src = "/images/watermark.png";
 
     // Add an event listener for the error event
     backgroundImage.onerror = function () {
