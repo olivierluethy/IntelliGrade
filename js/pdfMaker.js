@@ -5,8 +5,6 @@ document.querySelector(".dwnPDF").addEventListener("click", function () {
   var gradeLines = table.querySelectorAll("tr");
 
   if (table && gradeLines.length > 1) {
-    console.log("Element with ID 'gradesTable' exists.");
-
     var rows = table.getElementsByTagName("tr");
 
     // Create a new jsPDF instance
@@ -14,7 +12,20 @@ document.querySelector(".dwnPDF").addEventListener("click", function () {
 
     // Add background image to the document
     var backgroundImage = new Image();
-    backgroundImage.src = "../images/watermark.png"; // Specify the path to your image
+
+    // Specify the path to your image
+    backgroundImage.src = "../images/watermark.png";
+
+    // Add an event listener for the error event
+    backgroundImage.onerror = function () {
+      console.error("Error loading image");
+    };
+
+    // Add an event listener for the load event
+    backgroundImage.onload = function () {
+      // The image loaded successfully, you can use it here
+      console.log("Image loaded successfully");
+    };
 
     // Define the size of the watermark
     var watermarkWidth = 25; // You can adjust this value
@@ -24,15 +35,18 @@ document.querySelector(".dwnPDF").addEventListener("click", function () {
     var watermarkX = doc.internal.pageSize.width - watermarkWidth;
     var watermarkY = doc.internal.pageSize.height - watermarkHeight;
 
-    // Add the watermark to the document
-    doc.addImage(
-      backgroundImage,
-      "PNG",
-      watermarkX,
-      watermarkY,
-      watermarkWidth,
-      watermarkHeight
-    );
+    // Add an event listener for the load event
+    backgroundImage.onload = function () {
+      // Add the watermark to the document
+      doc.addImage(
+        backgroundImage,
+        "PNG",
+        watermarkX,
+        watermarkY,
+        watermarkWidth,
+        watermarkHeight
+      );
+    };
 
     // Define title for the document
     var title = "Grades Table";
@@ -74,8 +88,6 @@ document.querySelector(".dwnPDF").addEventListener("click", function () {
 
         // Add the rowData array to the data array
         data.push(rowData);
-      } else {
-        console.log("No cells found in row " + (i + 1));
       }
     }
     // Define the top margin for the table
@@ -129,7 +141,11 @@ document.querySelector(".dwnPDF").addEventListener("click", function () {
 
     // Add the "Average: " text to the document
     doc.setTextColor(0, 0, 0); // Black color for the text
-    doc.text("Average: ", 15, doc.internal.pageSize.height - 230);
+    doc.text(
+      "Average: ",
+      15,
+      doc.autoTable.previous.finalY + 20 // Position the text below the table
+    );
 
     // Set the text color based on the average value
     if (average >= 4) {
@@ -138,14 +154,12 @@ document.querySelector(".dwnPDF").addEventListener("click", function () {
       doc.setTextColor(255, 0, 0); // Red for negative values
     }
 
-    // Add the average value to the document
     doc.text(
       average.toFixed(2),
       15 +
-        (doc.getStringUnitWidth("Grade required for minimum 3.75 average:   ") *
-          doc.internal.getFontSize()) /
+        (doc.getStringUnitWidth("Average: ") * doc.internal.getFontSize()) /
           doc.internal.scaleFactor,
-      doc.internal.pageSize.height - 230
+      doc.autoTable.previous.finalY + 20 // Position the text below the table
     );
 
     // Initialize variables to store the sum of grades and weights
@@ -177,18 +191,40 @@ document.querySelector(".dwnPDF").addEventListener("click", function () {
     doc.text(
       "Grade required for minimum 3.75 average:   ",
       15,
-      doc.internal.pageSize.height - 220
+      doc.autoTable.previous.finalY + 35
     );
 
-    // Add the needed grade value to the document
-    doc.text(
-      neededGrade,
-      15 +
-        (doc.getStringUnitWidth("Grade required for minimum 3.75 average:   ") *
-          doc.internal.getFontSize()) /
-          doc.internal.scaleFactor,
-      doc.internal.pageSize.height - 220
-    );
+    if (neededGrade > 6 || neededGrade < 1) {
+      doc.text(
+        "Not possible",
+        15 +
+          (doc.getStringUnitWidth(
+            "Grade required for minimum 3.75 average:   "
+          ) *
+            doc.internal.getFontSize()) /
+            doc.internal.scaleFactor,
+        doc.autoTable.previous.finalY + 35
+      );
+    } else {
+      // Add the needed grade value to the document
+      // Set the text color based on the average value
+      if (neededGrade >= 4) {
+        doc.setTextColor(0, 255, 0); // Green for positive values
+      } else {
+        doc.setTextColor(255, 0, 0); // Red for negative values
+      }
+
+      doc.text(
+        neededGrade,
+        15 +
+          (doc.getStringUnitWidth(
+            "Grade required for minimum 3.75 average:   "
+          ) *
+            doc.internal.getFontSize()) /
+            doc.internal.scaleFactor,
+        doc.autoTable.previous.finalY + 35
+      );
+    }
 
     // Output PDF content to a data URL
     var pdfData = doc.output("datauristring");

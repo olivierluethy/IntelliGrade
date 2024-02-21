@@ -46,7 +46,7 @@ function calculateNeededGrade() {
       alert(
         "Unrealistic goal! You'd need a grade of " +
           neededGrade.toFixed(2) +
-          "%."
+          "."
       );
     } else {
       alert(
@@ -54,7 +54,7 @@ function calculateNeededGrade() {
           desiredAverage.toFixed(2) +
           ", you need a grade of " +
           neededGrade.toFixed(2) +
-          "%."
+          "."
       );
     }
   } else {
