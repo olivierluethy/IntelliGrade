@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         document.querySelector("#gradesTable tr:first-child").style.visibility =
           "visible";
+        document.querySelector(".finish").style.display = "flex";
 
         // Create a new row
         var row = table.insertRow();

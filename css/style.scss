@@ -55,7 +55,7 @@
       }
       input[type="text"],
       input[type="number"] {
-        width: 50%;
+        width: 80%;
         padding: 12px;
         margin: 8px 0;
         box-sizing: border-box;
@@ -63,6 +63,7 @@
         border-radius: 4px;
         background-color: #fff;
         color: #282c35;
+        font-size: 15px;
         &:focus {
           outline: none;
           border: 1px solid #61dafb;
@@ -183,20 +184,29 @@
               }
             }
             .finish {
-              display: flex;
+              /* Default styles */
+              justify-content: center;
+              gap: 10px; /* Spacing between buttons */
+              display: none;
               .dwnPDF {
+                font-size: 17px;
                 background-color: red;
                 box-shadow: 1px 1px 81px 3px rgba(255, 255, 255, 0.75);
                 -webkit-box-shadow: 1px 1px 81px 3px rgba(255, 255, 255, 0.75);
                 -moz-box-shadow: 1px 1px 81px 3px rgba(255, 255, 255, 0.75);
               }
               .finishBtn {
+                font-size: 17px;
                 box-shadow: 1px 1px 81px 3px rgba(255, 255, 255, 0.75);
                 -webkit-box-shadow: 1px 1px 81px 3px rgba(255, 255, 255, 0.75);
                 -moz-box-shadow: 1px 1px 81px 3px rgba(255, 255, 255, 0.75);
               }
+              .convertToExcel {
+                font-size: 17px;
+                background-color: #3ac786;
+              }
             }
-            hr {
+            .hrShadow {
               box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
             }
           }
@@ -293,6 +303,42 @@
       to {
         top: 0;
         opacity: 1;
+      }
+    }
+  }
+}
+
+@media (max-width: 356px) {
+  #titleInput {
+    tr {
+      td {
+        input {
+          width: 80%;
+        }
+      }
+    }
+  }
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .finish {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center;
+
+    .finishBtn,
+    .dwnPDF,
+    .convertToExcel {
+      width: 100%; /* Make buttons full width */
+      margin-bottom: 1px; /* Add spacing between buttons */
+    }
+  }
+  #titleInput {
+    tr {
+      td {
+        input {
+          width: 92%;
+        }
       }
     }
   }
