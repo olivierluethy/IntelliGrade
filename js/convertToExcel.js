@@ -22,7 +22,17 @@ function exportToExcel(tableId, filename) {
     const cells = row.querySelectorAll('td input[type="number"]');
     const rowData = [];
     cells.forEach((cell, cellIndex) => {
-      rowData[cellIndex] = cell.value;
+      const value = cell.value;
+      // Add the value to the rowData array
+      rowData[cellIndex] = value;
+      // Determine background color based on the grade
+      const color = value < 4 ? "FF0000" : "00FF00"; // Red for grades under 4, green for 4 and above
+      // Set background color for the cell
+      XLSX.utils.format_cell(
+        { s: { bg_color: { rgb: color } } },
+        { c: cellIndex, r: rowIndex + 1 },
+        worksheet
+      );
     });
     // Add the row data to the worksheet
     XLSX.utils.sheet_add_aoa(worksheet, [rowData], { origin: -1 });
