@@ -17,6 +17,7 @@
     <script defer src="js/modalGenerateTable.js"></script>
     <script defer src="js/neededGrade.js"></script>
     <script defer src="js/pdfMaker.js"></script>
+    <script defer src="js/convertToExcel.js"></script>
     <title>IntelliGrade</title>
   </head>
 
@@ -133,6 +134,13 @@
               >
                 Download PDF
               </button>
+              <button
+                class="fa fa-file-excel-o"
+                title="Convert the table below to an excel table"
+                onclick="exportToExcel('gradesTable', 'myGrades.xlsx')"
+              >
+                Convert to Excel table
+              </button>
             </div>
             <hr />
             <div id="gradesTable-container">
@@ -161,5 +169,6 @@
         </div>
       </div>
     </div>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
   </body>
 </html>
