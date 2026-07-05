@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { AppData, Grade, Semester, Subject } from "../domain/types";
-import { loadAppData, saveAppData, emptyAppData } from "./persistence";
+import { loadAppData, saveAppData } from "./persistence";
 import { swissScale } from "../domain/grade-scale";
 import { newId } from "./id";
 
