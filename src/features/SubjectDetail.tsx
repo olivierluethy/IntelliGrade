@@ -4,6 +4,7 @@ import { getScale } from "../domain/grade-scale";
 import { Badge } from "../components/Badge";
 import { Card } from "../components/Card";
 import { AddGradeForm } from "./AddGradeForm";
+import { PointsCalculator } from "./PointsCalculator";
 import { GradeRow } from "./GradeRow";
 
 type Props = { semesterId: string; subjectId: string };
@@ -35,6 +36,14 @@ export function SubjectDetail({ semesterId, subjectId }: Props) {
 
       <Card>
         <AddGradeForm
+          semesterId={semesterId}
+          subjectId={subjectId}
+          scale={scale}
+        />
+      </Card>
+
+      <Card>
+        <PointsCalculator
           semesterId={semesterId}
           subjectId={subjectId}
           scale={scale}
