@@ -43,7 +43,7 @@ export function SubjectList({ selectedSubjectId, onSelectSubject }: Props) {
             <li key={sub.id}>
               <button
                 onClick={() => onSelectSubject(sub.id)}
-                className={`flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-sm transition-colors ${
+                className={`flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400/60 ${
                   active
                     ? "bg-indigo-500/15 text-indigo-300"
                     : "text-slate-300 hover:bg-slate-800"
