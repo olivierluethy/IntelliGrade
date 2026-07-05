@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Sidebar } from "./features/Sidebar";
+import { SubjectDetail } from "./features/SubjectDetail";
+import { useStore } from "./store/useStore";
 
 export default function App() {
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
     null
   );
+  const activeSemesterId = useStore((s) => s.data.activeSemesterId);
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
@@ -13,8 +16,11 @@ export default function App() {
         onSelectSubject={setSelectedSubjectId}
       />
       <main className="flex-1 p-6">
-        {selectedSubjectId ? (
-          <p className="text-slate-500">Subject detail comes in Task 8.</p>
+        {selectedSubjectId && activeSemesterId ? (
+          <SubjectDetail
+            semesterId={activeSemesterId}
+            subjectId={selectedSubjectId}
+          />
         ) : (
           <div className="grid h-full place-items-center text-center">
             <div className="space-y-2">
