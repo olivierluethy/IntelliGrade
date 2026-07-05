@@ -16,13 +16,22 @@
 
 ## Getting Started
 
-1. Clone this repository to your local machine.
-2. Open the application in your preferred web browser.
-3. Start utilizing the features to enhance your academic experience.
+1. Clone this repository.
+2. Run `npm install`.
+3. Run `npm run dev` and open the printed local URL.
 
-## Dependencies
+## Tech Stack
 
-- This application is built using [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML), and [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS).
+Vite · React · TypeScript · Tailwind CSS · Zustand · Lucide · Vitest
+
+## Architecture
+
+- `src/domain/` — pure, framework-free grade logic behind a `GradeScale` interface (unit-tested with Vitest).
+- `src/store/` — Zustand state with versioned localStorage persistence.
+- `src/components/` — reusable dark-theme UI primitives.
+- `src/features/` — app screens (semester switcher, subject list, subject detail, calculators).
+
+Data model: **Semester → Subject → Grade**, all saved locally in the browser.
 
 ## How to Contribute
 
