@@ -70,7 +70,11 @@ export function GradeRow({ semesterId, subjectId, grade, scale }: Props) {
               <IconButton
                 icon={X}
                 label="Cancel"
-                onClick={() => setEditing(false)}
+                onClick={() => {
+                  setValue(String(grade.value));
+                  setWeight(String(grade.weight));
+                  setEditing(false);
+                }}
               />
             </>
           ) : (
