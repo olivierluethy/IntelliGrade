@@ -32,6 +32,7 @@ export function PointsCalculator({ semesterId, subjectId, scale }: Props) {
           className={input}
           type="number"
           placeholder="Earned"
+          aria-label="Earned points"
           value={earned}
           onChange={(ev) => setEarned(ev.target.value)}
         />
@@ -40,6 +41,7 @@ export function PointsCalculator({ semesterId, subjectId, scale }: Props) {
           className={input}
           type="number"
           placeholder="Max"
+          aria-label="Max points"
           value={max}
           onChange={(ev) => setMax(ev.target.value)}
         />

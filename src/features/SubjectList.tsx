@@ -67,6 +67,7 @@ export function SubjectList({ selectedSubjectId, onSelectSubject }: Props) {
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && submit()}
           placeholder="Add subject"
+          aria-label="New subject name"
           className="min-w-0 flex-1 rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400/60"
         />
         <Button onClick={submit}>

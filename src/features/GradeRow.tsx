@@ -40,6 +40,7 @@ export function GradeRow({ semesterId, subjectId, grade, scale }: Props) {
             type="number"
             step="0.05"
             value={value}
+            aria-label="Edit value"
             onChange={(e) => setValue(e.target.value)}
           />
         ) : (
@@ -55,6 +56,7 @@ export function GradeRow({ semesterId, subjectId, grade, scale }: Props) {
             type="number"
             step="0.5"
             value={weight}
+            aria-label="Edit weight"
             onChange={(e) => setWeight(e.target.value)}
           />
         ) : (

@@ -27,6 +27,7 @@ export function SemesterSwitcher() {
       <select
         value={activeSemesterId ?? ""}
         onChange={(e) => setActive(e.target.value)}
+        aria-label="Select semester"
         className="w-full rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400/60"
       >
         {semesters.length === 0 && <option value="">No semesters yet</option>}
@@ -45,6 +46,7 @@ export function SemesterSwitcher() {
             onChange={(e) => setName(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && submit()}
             placeholder="e.g. HS25"
+            aria-label="New semester name"
             className="min-w-0 flex-1 rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400/60"
           />
           <Button onClick={submit}>Add</Button>

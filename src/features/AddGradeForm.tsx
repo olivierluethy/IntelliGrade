@@ -48,6 +48,7 @@ export function AddGradeForm({ semesterId, subjectId, scale }: Props) {
           type="number"
           step="0.05"
           placeholder="Grade"
+          aria-label="Grade"
           className={`${input} w-24`}
         />
         <input
@@ -57,6 +58,7 @@ export function AddGradeForm({ semesterId, subjectId, scale }: Props) {
           type="number"
           step="0.5"
           placeholder="Weight"
+          aria-label="Weight"
           className={`${input} w-24`}
         />
         <input
@@ -64,6 +66,7 @@ export function AddGradeForm({ semesterId, subjectId, scale }: Props) {
           onChange={(e) => setLabel(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && submit()}
           placeholder="Label (optional)"
+          aria-label="Grade label"
           className={`${input} min-w-0 flex-1`}
         />
         <Button onClick={submit}>

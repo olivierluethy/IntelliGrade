@@ -7,19 +7,26 @@ export default function App() {
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
     null
   );
-  const activeSemesterId = useStore((s) => s.data.activeSemesterId);
+  const data = useStore((s) => s.data);
+  const activeSemesterId = data.activeSemesterId;
+  const activeSemester = data.semesters.find((s) => s.id === activeSemesterId);
+  const effectiveSubjectId =
+    selectedSubjectId !== null &&
+    activeSemester?.subjects.some((sub) => sub.id === selectedSubjectId)
+      ? selectedSubjectId
+      : null;
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
       <Sidebar
-        selectedSubjectId={selectedSubjectId}
+        selectedSubjectId={effectiveSubjectId}
         onSelectSubject={setSelectedSubjectId}
       />
       <main className="flex-1 p-6">
-        {selectedSubjectId && activeSemesterId ? (
+        {effectiveSubjectId && activeSemesterId ? (
           <SubjectDetail
             semesterId={activeSemesterId}
-            subjectId={selectedSubjectId}
+            subjectId={effectiveSubjectId}
           />
         ) : (
           <div className="grid h-full place-items-center text-center">
