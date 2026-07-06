@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Sidebar } from "./features/Sidebar";
 import { SubjectDetail } from "./features/SubjectDetail";
+import { ToolsPage } from "./features/tools/ToolsPage";
 import { useStore } from "./store/useStore";
 
 export default function App() {
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
     null
   );
+  const [view, setView] = useState<"grades" | "tools">("grades");
   const data = useStore((s) => s.data);
   const activeSemesterId = data.activeSemesterId;
   const activeSemester = data.semesters.find((s) => s.id === activeSemesterId);
@@ -21,9 +23,16 @@ export default function App() {
       <Sidebar
         selectedSubjectId={effectiveSubjectId}
         onSelectSubject={setSelectedSubjectId}
+        view={view}
+        onChangeView={setView}
       />
       <main className="flex-1 p-6">
-        {effectiveSubjectId && activeSemesterId ? (
+        {view === "tools" ? (
+          <ToolsPage
+            semesterId={activeSemesterId ?? null}
+            subjectId={effectiveSubjectId}
+          />
+        ) : effectiveSubjectId && activeSemesterId ? (
           <SubjectDetail
             semesterId={activeSemesterId}
             subjectId={effectiveSubjectId}
