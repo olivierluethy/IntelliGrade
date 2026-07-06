@@ -2,14 +2,17 @@ import { useState } from "react";
 import { Sidebar } from "./features/Sidebar";
 import { SubjectDetail } from "./features/SubjectDetail";
 import { ToolsPage } from "./features/tools/ToolsPage";
+import { AlertsView } from "./features/alerts/AlertsView";
 import { useStore } from "./store/useStore";
+import { computeAlerts } from "./domain/alerts";
 
 export default function App() {
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
     null
   );
-  const [view, setView] = useState<"grades" | "tools">("grades");
+  const [view, setView] = useState<"grades" | "tools" | "alerts">("grades");
   const data = useStore((s) => s.data);
+  const setActiveSemester = useStore((s) => s.setActiveSemester);
   const activeSemesterId = data.activeSemesterId;
   const activeSemester = data.semesters.find((s) => s.id === activeSemesterId);
   const effectiveSubjectId =
@@ -18,6 +21,14 @@ export default function App() {
       ? selectedSubjectId
       : null;
 
+  const alerts = computeAlerts(data.semesters, new Date());
+
+  const openSubject = (semesterId: string, subjectId: string) => {
+    setActiveSemester(semesterId);
+    setSelectedSubjectId(subjectId);
+    setView("grades");
+  };
+
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
       <Sidebar
@@ -25,9 +36,12 @@ export default function App() {
         onSelectSubject={setSelectedSubjectId}
         view={view}
         onChangeView={setView}
+        alertCount={alerts.length}
       />
       <main className="flex-1 p-6">
-        {view === "tools" ? (
+        {view === "alerts" ? (
+          <AlertsView alerts={alerts} onOpenSubject={openSubject} />
+        ) : view === "tools" ? (
           <ToolsPage
             semesterId={activeSemesterId ?? null}
             subjectId={effectiveSubjectId}

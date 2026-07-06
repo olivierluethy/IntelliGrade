@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { AppData, Grade, Semester, Subject } from "../domain/types";
+import type { AppData, Grade, Semester, Subject, Exam } from "../domain/types";
 import { loadAppData, saveAppData } from "./persistence";
 import { swissScale } from "../domain/grade-scale";
 import { newId } from "./id";
@@ -30,6 +30,14 @@ type State = {
     semesterId: string,
     subjectId: string,
     target: number | undefined
+  ) => void;
+  addExam: (semesterId: string, subjectId: string, exam: Omit<Exam, "id">) => string;
+  deleteExam: (semesterId: string, subjectId: string, examId: string) => void;
+  recordExamGrade: (
+    semesterId: string,
+    subjectId: string,
+    examId: string,
+    value: number
   ) => void;
 };
 
@@ -82,7 +90,7 @@ export const useStore = create<State>((set, get) => {
       commit(
         mapSemester(get().data, semesterId, (s) => ({
           ...s,
-          subjects: [...s.subjects, { id, name, grades: [] }],
+          subjects: [...s.subjects, { id, name, grades: [], exams: [] }],
         }))
       );
       return id;
@@ -131,6 +139,47 @@ export const useStore = create<State>((set, get) => {
           ...sub,
           targetGrade: target,
         }))
+      ),
+
+    addExam: (semesterId, subjectId, exam) => {
+      const id = newId();
+      commit(
+        mapSubject(get().data, semesterId, subjectId, (sub) => ({
+          ...sub,
+          exams: [...sub.exams, { ...exam, id }],
+        }))
+      );
+      return id;
+    },
+
+    deleteExam: (semesterId, subjectId, examId) =>
+      commit(
+        mapSubject(get().data, semesterId, subjectId, (sub) => ({
+          ...sub,
+          exams: sub.exams.filter((e) => e.id !== examId),
+        }))
+      ),
+
+    recordExamGrade: (semesterId, subjectId, examId, value) =>
+      commit(
+        mapSubject(get().data, semesterId, subjectId, (sub) => {
+          const exam = sub.exams.find((e) => e.id === examId);
+          if (!exam) return sub;
+          return {
+            ...sub,
+            grades: [
+              ...sub.grades,
+              {
+                id: newId(),
+                value,
+                weight: exam.weight,
+                label: exam.name,
+                date: exam.date,
+              },
+            ],
+            exams: sub.exams.filter((e) => e.id !== examId),
+          };
+        })
       ),
   };
 });

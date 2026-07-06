@@ -55,4 +55,36 @@ describe("store CRUD", () => {
       useStore.getState().data.semesters[0].subjects[0].targetGrade
     ).toBe(5.2);
   });
+
+  it("adds and deletes an exam", () => {
+    const sem = useStore.getState().addSemester("HS25");
+    const sub = useStore.getState().addSubject(sem, "Math");
+    const eid = useStore
+      .getState()
+      .addExam(sem, sub, { name: "Vectors", date: "2026-07-10", weight: 2 });
+    let exams = useStore.getState().data.semesters[0].subjects[0].exams;
+    expect(exams).toHaveLength(1);
+    expect(exams[0].name).toBe("Vectors");
+
+    useStore.getState().deleteExam(sem, sub, eid);
+    exams = useStore.getState().data.semesters[0].subjects[0].exams;
+    expect(exams).toHaveLength(0);
+  });
+
+  it("records an exam as a grade and removes the exam", () => {
+    const sem = useStore.getState().addSemester("HS25");
+    const sub = useStore.getState().addSubject(sem, "Math");
+    const eid = useStore
+      .getState()
+      .addExam(sem, sub, { name: "Vectors", date: "2026-07-10", weight: 2 });
+
+    useStore.getState().recordExamGrade(sem, sub, eid, 5.5);
+    const subject = useStore.getState().data.semesters[0].subjects[0];
+    expect(subject.exams).toHaveLength(0);
+    expect(subject.grades).toHaveLength(1);
+    expect(subject.grades[0].value).toBe(5.5);
+    expect(subject.grades[0].weight).toBe(2);
+    expect(subject.grades[0].label).toBe("Vectors");
+    expect(subject.grades[0].date).toBe("2026-07-10");
+  });
 });
