@@ -7,10 +7,14 @@ export function emptyAppData(): AppData {
 }
 
 // Ensure every subject has an `exams` array (v1 subjects lack it).
+// Defensive against deeply-malformed payloads: a semester with a non-array
+// `subjects` degrades to an empty subject list rather than throwing.
 function withExams(semesters: Semester[]): Semester[] {
   return semesters.map((s) => ({
     ...s,
-    subjects: s.subjects.map((sub) => ({ ...sub, exams: sub.exams ?? [] })),
+    subjects: Array.isArray(s.subjects)
+      ? s.subjects.map((sub) => ({ ...sub, exams: sub.exams ?? [] }))
+      : [],
   }));
 }
 

@@ -45,6 +45,17 @@ describe("migrate", () => {
     expect(out.semesters[0].subjects[0].exams).toEqual([]);
   });
 
+  it("degrades a semester with non-array subjects to empty (no throw)", () => {
+    const malformed = {
+      schemaVersion: 1,
+      activeSemesterId: "s1",
+      semesters: [{ id: "s1", name: "HS25", scaleId: "swiss", subjects: null }],
+    };
+    const out = migrate(malformed);
+    expect(out.schemaVersion).toBe(2);
+    expect(out.semesters[0].subjects).toEqual([]);
+  });
+
   it("passes through valid v2 data (defaulting missing exams)", () => {
     const v2 = {
       schemaVersion: 2,
