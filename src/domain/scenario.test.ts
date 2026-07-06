@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { gradeNeeded } from "./scenario";
+import { gradeNeeded, badGradesAffordable } from "./scenario";
 import type { Grade } from "./types";
+import { swissScale } from "./grade-scale/swiss";
 
 const g = (value: number, weight: number): Grade => ({
   id: Math.random().toString(),
@@ -35,5 +36,31 @@ describe("gradeNeeded", () => {
 
   it("weight <= 0 → NaN", () => {
     expect(Number.isNaN(gradeNeeded([g(4, 1)], 5, 0))).toBe(true);
+  });
+});
+
+describe("badGradesAffordable", () => {
+  it("counts affordable bad grades holding the target (inclusive boundary)", () => {
+    // grades [6 w1], target 5, bad 4: floor((6 - 5)/(5-4)) = 1
+    // check n=1: (6+4)/2 = 5 >= 5 ✓ ; n=2: (6+8)/3 = 4.67 < 5 ✗
+    expect(badGradesAffordable([g(6, 1)], 5, 4, swissScale)).toBe(1);
+  });
+
+  it("counts correctly with weighted existing grades", () => {
+    // grades [6 w2], target 5, bad 4: floor((12 - 10)/1) = 2
+    expect(badGradesAffordable([g(6, 2)], 5, 4, swissScale)).toBe(2);
+  });
+
+  it("returns 0 when already below target", () => {
+    expect(badGradesAffordable([g(4, 1)], 5, 4, swissScale)).toBe(0);
+  });
+
+  it("returns Infinity when the bad value is at or above the target", () => {
+    expect(badGradesAffordable([g(5, 1)], 5, 5, swissScale)).toBe(Infinity);
+  });
+
+  it("returns NaN for a lower-is-better scale (unsupported)", () => {
+    const reversed = { ...swissScale, higherIsBetter: false };
+    expect(Number.isNaN(badGradesAffordable([g(6, 1)], 5, 4, reversed))).toBe(true);
   });
 });
