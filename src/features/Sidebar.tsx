@@ -1,14 +1,15 @@
 import { SemesterSwitcher } from "./SemesterSwitcher";
 import { SubjectList } from "./SubjectList";
-import { GraduationCap, BookOpen, Wrench } from "../components/Icon";
+import { GraduationCap, BookOpen, Wrench, Bell } from "../components/Icon";
 
-type View = "grades" | "tools";
+type View = "grades" | "tools" | "alerts";
 
 type Props = {
   selectedSubjectId: string | null;
   onSelectSubject: (id: string) => void;
   view: View;
   onChangeView: (view: View) => void;
+  alertCount: number;
 };
 
 export function Sidebar({
@@ -16,6 +17,7 @@ export function Sidebar({
   onSelectSubject,
   view,
   onChangeView,
+  alertCount,
 }: Props) {
   const navBtn = (active: boolean) =>
     `flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400/60 ${
@@ -46,6 +48,19 @@ export function Sidebar({
           onClick={() => onChangeView("tools")}
         >
           <Wrench size={16} /> Tools
+        </button>
+        <button
+          type="button"
+          className={navBtn(view === "alerts")}
+          aria-current={view === "alerts" ? "page" : undefined}
+          onClick={() => onChangeView("alerts")}
+        >
+          <Bell size={16} /> Alerts
+          {alertCount > 0 && (
+            <span className="ml-0.5 rounded-full bg-rose-500 px-1.5 text-xs font-semibold text-white">
+              {alertCount}
+            </span>
+          )}
         </button>
       </nav>
       <SemesterSwitcher />

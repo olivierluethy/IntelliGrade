@@ -16,4 +16,8 @@ export {
   ShieldAlert,
   CalendarClock,
   CalendarPlus,
+  Bell,
+  AlertTriangle,
+  TrendingDown,
+  FileWarning,
 } from "lucide-react";
