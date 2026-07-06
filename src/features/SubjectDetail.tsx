@@ -6,6 +6,9 @@ import { Card } from "../components/Card";
 import { AddGradeForm } from "./AddGradeForm";
 import { PointsCalculator } from "./PointsCalculator";
 import { GradeRow } from "./GradeRow";
+import { TargetEditor } from "./TargetEditor";
+import { GradeNeededCard } from "./scenario/GradeNeededCard";
+import { AffordCard } from "./scenario/AffordCard";
 
 type Props = { semesterId: string; subjectId: string };
 
@@ -20,17 +23,26 @@ export function SubjectDetail({ semesterId, subjectId }: Props) {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
-      <header className="flex items-center justify-between">
+      <header className="flex items-start justify-between gap-4">
         <h2 className="text-2xl font-semibold tracking-tight">
           {subject.name}
         </h2>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-slate-500">Average</span>
-          {avg === null ? (
-            <Badge className="text-slate-400">—</Badge>
-          ) : (
-            <Badge className={scale.colorFor(avg)}>{scale.format(avg)}</Badge>
-          )}
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-slate-500">Average</span>
+            {avg === null ? (
+              <Badge className="text-slate-400">—</Badge>
+            ) : (
+              <Badge className={scale.colorFor(avg)}>{scale.format(avg)}</Badge>
+            )}
+          </div>
+          <TargetEditor
+            key={subjectId}
+            semesterId={semesterId}
+            subjectId={subjectId}
+            target={subject.targetGrade}
+            scale={scale}
+          />
         </div>
       </header>
 
@@ -49,6 +61,27 @@ export function SubjectDetail({ semesterId, subjectId }: Props) {
           scale={scale}
         />
       </Card>
+
+      {subject.targetGrade === undefined ? (
+        <Card>
+          <p className="text-sm text-slate-500">
+            Set a target grade to plan ahead.
+          </p>
+        </Card>
+      ) : (
+        <>
+          <GradeNeededCard
+            grades={subject.grades}
+            target={subject.targetGrade}
+            scale={scale}
+          />
+          <AffordCard
+            grades={subject.grades}
+            target={subject.targetGrade}
+            scale={scale}
+          />
+        </>
+      )}
 
       <Card className="overflow-x-auto p-0">
         {subject.grades.length === 0 ? (

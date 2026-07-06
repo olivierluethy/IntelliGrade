@@ -13,4 +13,5 @@ export {
   SlidersHorizontal,
   Percent,
   Wrench,
+  ShieldAlert,
 } from "lucide-react";
