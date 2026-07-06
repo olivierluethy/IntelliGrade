@@ -7,6 +7,7 @@ import { AddGradeForm } from "./AddGradeForm";
 import { PointsCalculator } from "./PointsCalculator";
 import { GradeRow } from "./GradeRow";
 import { TargetEditor } from "./TargetEditor";
+import { GradeNeededCard } from "./scenario/GradeNeededCard";
 
 type Props = { semesterId: string; subjectId: string };
 
@@ -58,6 +59,23 @@ export function SubjectDetail({ semesterId, subjectId }: Props) {
           scale={scale}
         />
       </Card>
+
+      {subject.targetGrade === undefined ? (
+        <Card>
+          <p className="text-sm text-slate-500">
+            Set a target grade to plan ahead.
+          </p>
+        </Card>
+      ) : (
+        <>
+          <GradeNeededCard
+            grades={subject.grades}
+            target={subject.targetGrade}
+            scale={scale}
+          />
+          {/* AffordCard added in Task 5 */}
+        </>
+      )}
 
       <Card className="overflow-x-auto p-0">
         {subject.grades.length === 0 ? (
