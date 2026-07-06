@@ -1,6 +1,7 @@
 import { useStore } from "../../store/useStore";
 import { getScale } from "../../domain/grade-scale";
 import { VerificationCalculator } from "./VerificationCalculator";
+import { CurveCalculator } from "./CurveCalculator";
 
 type Props = { semesterId: string | null; subjectId: string | null };
 
@@ -18,7 +19,8 @@ export function ToolsPage({ semesterId, subjectId }: Props) {
         </p>
       </header>
       <VerificationCalculator scale={scale} semesterId={semesterId} subjectId={subjectId} />
-      {/* CurveCalculator (Task 7) and GradeChangeCalculator (Task 8) added below */}
+      <CurveCalculator scale={scale} semesterId={semesterId} subjectId={subjectId} />
+      {/* GradeChangeCalculator (Task 8) added below */}
     </div>
   );
 }
