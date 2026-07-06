@@ -1,6 +1,14 @@
+import { useStore } from "../../store/useStore";
+import { getScale } from "../../domain/grade-scale";
+import { VerificationCalculator } from "./VerificationCalculator";
+
 type Props = { semesterId: string | null; subjectId: string | null };
 
-export function ToolsPage(_props: Props) {
+export function ToolsPage({ semesterId, subjectId }: Props) {
+  const data = useStore((s) => s.data);
+  const semester = data.semesters.find((s) => s.id === semesterId);
+  const scale = getScale(semester?.scaleId ?? "swiss");
+
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <header>
@@ -9,7 +17,8 @@ export function ToolsPage(_props: Props) {
           Verify grades, model curves, and compute percentage changes.
         </p>
       </header>
-      {/* Calculator cards added in Tasks 6–8 */}
+      <VerificationCalculator scale={scale} semesterId={semesterId} subjectId={subjectId} />
+      {/* CurveCalculator (Task 7) and GradeChangeCalculator (Task 8) added below */}
     </div>
   );
 }
