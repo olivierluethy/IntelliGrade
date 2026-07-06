@@ -9,4 +9,8 @@ export {
   ChevronRight,
   BookOpen,
   Target,
+  ClipboardCheck,
+  SlidersHorizontal,
+  Percent,
+  Wrench,
 } from "lucide-react";
