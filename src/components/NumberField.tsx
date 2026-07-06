@@ -28,7 +28,7 @@ export function NumberField({
         aria-label={label}
         aria-invalid={error ? true : undefined}
         value={value}
-        step={step}
+        step={step ?? "any"}
         min={min}
         max={max}
         placeholder={placeholder}
