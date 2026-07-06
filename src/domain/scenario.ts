@@ -28,10 +28,16 @@ export function badGradesAffordable(
   badValue: number,
   scale: GradeScale
 ): number {
-  if (!scale.higherIsBetter) return NaN;
-  if (badValue >= target) return Infinity;
   const { W, S } = accumulate(grades);
-  if (W > 0 && S / W < target) return 0;
+  // A "bad" grade at or beyond the target in the good direction never pushes
+  // the average past the floor → unlimited.
+  const atOrBeyond = scale.higherIsBetter ? badValue >= target : badValue <= target;
+  if (atOrBeyond) return Infinity;
+  if (W > 0) {
+    const avg = S / W;
+    const pastFloor = scale.higherIsBetter ? avg < target : avg > target;
+    if (pastFloor) return 0;
+  }
   const n = Math.floor((S - target * W) / (target - badValue));
   return Math.max(0, n);
 }
