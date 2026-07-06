@@ -7,11 +7,19 @@ export type Grade = {
   category?: string;
 };
 
+export type Exam = {
+  id: string;
+  name: string;
+  date: string; // ISO calendar date, 'YYYY-MM-DD'
+  weight: number;
+};
+
 export type Subject = {
   id: string;
   name: string;
   targetGrade?: number;
   grades: Grade[];
+  exams: Exam[];
 };
 
 export type Semester = {
@@ -22,7 +30,7 @@ export type Semester = {
 };
 
 export type AppData = {
-  schemaVersion: 1;
+  schemaVersion: 2;
   activeSemesterId: string | null;
   semesters: Semester[];
 };

@@ -82,7 +82,7 @@ export const useStore = create<State>((set, get) => {
       commit(
         mapSemester(get().data, semesterId, (s) => ({
           ...s,
-          subjects: [...s.subjects, { id, name, grades: [] }],
+          subjects: [...s.subjects, { id, name, grades: [], exams: [] }],
         }))
       );
       return id;

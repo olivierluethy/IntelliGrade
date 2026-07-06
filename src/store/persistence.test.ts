@@ -26,13 +26,41 @@ describe("migrate", () => {
     expect(migrate({ foo: "bar" })).toEqual(emptyAppData());
   });
 
-  it("passes through valid v1 data", () => {
-    const data = {
+  it("upgrades v1 data to v2, adding exams: [] to each subject", () => {
+    const v1 = {
       schemaVersion: 1,
       activeSemesterId: "s1",
-      semesters: [{ id: "s1", name: "HS25", scaleId: "swiss", subjects: [] }],
+      semesters: [
+        {
+          id: "s1",
+          name: "HS25",
+          scaleId: "swiss",
+          subjects: [{ id: "sub1", name: "Math", grades: [] }],
+        },
+      ],
     };
-    expect(migrate(data)).toEqual(data);
+    const out = migrate(v1);
+    expect(out.schemaVersion).toBe(2);
+    expect(out.activeSemesterId).toBe("s1");
+    expect(out.semesters[0].subjects[0].exams).toEqual([]);
+  });
+
+  it("passes through valid v2 data (defaulting missing exams)", () => {
+    const v2 = {
+      schemaVersion: 2,
+      activeSemesterId: "s1",
+      semesters: [
+        {
+          id: "s1",
+          name: "HS25",
+          scaleId: "swiss",
+          subjects: [
+            { id: "sub1", name: "Math", grades: [], exams: [{ id: "e1", name: "Test", date: "2026-07-10", weight: 1 }] },
+          ],
+        },
+      ],
+    };
+    expect(migrate(v2)).toEqual(v2);
   });
 });
 
