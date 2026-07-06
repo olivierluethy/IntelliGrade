@@ -8,6 +8,7 @@ import { PointsCalculator } from "./PointsCalculator";
 import { GradeRow } from "./GradeRow";
 import { TargetEditor } from "./TargetEditor";
 import { GradeNeededCard } from "./scenario/GradeNeededCard";
+import { AffordCard } from "./scenario/AffordCard";
 
 type Props = { semesterId: string; subjectId: string };
 
@@ -73,7 +74,11 @@ export function SubjectDetail({ semesterId, subjectId }: Props) {
             target={subject.targetGrade}
             scale={scale}
           />
-          {/* AffordCard added in Task 5 */}
+          <AffordCard
+            grades={subject.grades}
+            target={subject.targetGrade}
+            scale={scale}
+          />
         </>
       )}
 
