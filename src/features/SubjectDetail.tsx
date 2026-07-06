@@ -5,6 +5,7 @@ import { Badge } from "../components/Badge";
 import { Card } from "../components/Card";
 import { AddGradeForm } from "./AddGradeForm";
 import { PointsCalculator } from "./PointsCalculator";
+import { ExamPlanner } from "./ExamPlanner";
 import { GradeRow } from "./GradeRow";
 import { TargetEditor } from "./TargetEditor";
 import { GradeNeededCard } from "./scenario/GradeNeededCard";
@@ -61,6 +62,13 @@ export function SubjectDetail({ semesterId, subjectId }: Props) {
           scale={scale}
         />
       </Card>
+
+      <ExamPlanner
+        semesterId={semesterId}
+        subjectId={subjectId}
+        exams={subject.exams}
+        scale={scale}
+      />
 
       {subject.targetGrade === undefined ? (
         <Card>
