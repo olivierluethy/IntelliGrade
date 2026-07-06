@@ -63,4 +63,8 @@ describe("badGradesAffordable", () => {
     const reversed = { ...swissScale, higherIsBetter: false };
     expect(Number.isNaN(badGradesAffordable([g(6, 1)], 5, 4, reversed))).toBe(true);
   });
+
+  it("returns 0 when current average exactly equals target", () => {
+    expect(badGradesAffordable([g(5, 1)], 5, 4, swissScale)).toBe(0);
+  });
 });

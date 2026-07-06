@@ -37,6 +37,7 @@ export function SubjectDetail({ semesterId, subjectId }: Props) {
             )}
           </div>
           <TargetEditor
+            key={subjectId}
             semesterId={semesterId}
             subjectId={subjectId}
             target={subject.targetGrade}

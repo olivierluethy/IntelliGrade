@@ -40,6 +40,11 @@ export function AffordCard({ grades, target, scale }: Props) {
             <span className="text-rose-400">
               You're below target now — 0 to spare.
             </span>
+          ) : n === 0 ? (
+            <span className="text-amber-400">
+              No room — even one grade of {scale.format(b)} drops you below{" "}
+              {scale.format(target)}.
+            </span>
           ) : (
             <span>
               You can take{" "}
