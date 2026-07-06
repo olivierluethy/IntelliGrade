@@ -81,17 +81,14 @@ export function ExamPlanner({ semesterId, subjectId, exams, scale }: Props) {
               <span className="text-slate-500">{exam.date}</span>
               <span className="text-slate-500">×{exam.weight}</span>
               <div className="ml-auto flex items-center gap-1.5">
-                <input
-                  className={`${input} w-20`}
-                  type="number"
-                  step="0.05"
-                  placeholder="Grade"
-                  aria-label={`Grade for ${exam.name}`}
-                  value={recording[exam.id] ?? ""}
-                  onChange={(e) =>
-                    setRecording((r) => ({ ...r, [exam.id]: e.target.value }))
-                  }
-                />
+                <div className="w-24">
+                  <NumberField
+                    label="Grade"
+                    value={recording[exam.id] ?? ""}
+                    onChange={(v) => setRecording((r) => ({ ...r, [exam.id]: v }))}
+                    placeholder="Grade"
+                  />
+                </div>
                 <Button
                   variant="ghost"
                   disabled={
