@@ -587,7 +587,7 @@ git commit -m "feat(ui): add grade-scale picker to new-semester form"
 ## Final verification (after Task 4)
 
 - [x] Run the full gate once more: `npx tsc -b && npm test && npm run build` — all green.
-- [ ] Manual smoke (`npm run dev`): create a semester with, e.g., Germany — its subjects' averages/verification/colors reflect lower-is-better (1 best); the scale caption shows "Germany (1–6)"; existing Swiss semesters are unchanged.
+- [x] Manual smoke (Playwright against `vite preview`): created a Germany semester — caption "Scale: Germany (1–6)"; grade 1.00 renders green (best) and 6.00 red (worst); average 3.50 amber; out-of-range 7 rejected with "Grade must be between 1 and 6." Cross-checked Swiss: same 6.00 renders green (higher-is-better). No console errors.
 - [x] Update the design spec status line and log any follow-ups.
 
 ## Success criteria (from the design spec)
