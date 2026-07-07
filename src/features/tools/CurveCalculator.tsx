@@ -6,6 +6,7 @@ import { useStore } from "../../store/useStore";
 import { NumberField } from "../../components/NumberField";
 import { Card } from "../../components/Card";
 import { Button } from "../../components/Button";
+import { SectionHeader } from "../../components/SectionHeader";
 import { SlidersHorizontal, Plus } from "../../components/Icon";
 
 type Props = { scale: GradeScale; semesterId: string | null; subjectId: string | null };
@@ -42,51 +43,48 @@ export function CurveCalculator({ scale, semesterId, subjectId }: Props) {
   };
 
   return (
-    <Card>
-      <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-200">
-        <SlidersHorizontal size={16} className="text-indigo-400" />
-        Grade curve adjustment
-      </div>
+    <Card className="flex h-full flex-col">
+      <SectionHeader
+        icon={SlidersHorizontal}
+        title="Adjust for a curve"
+        hint="Teacher lowered the max or added bonus points? See your new grade before it's official."
+      />
       <div className="grid gap-3 sm:grid-cols-2">
-        <NumberField label="Earned points" value={earned} onChange={setEarned} placeholder="e.g. 15" />
-        <NumberField label="Original max" value={originalMax} onChange={setOriginalMax} placeholder="e.g. 20" />
-        <NumberField label="Adjusted max" value={adjustedMax} onChange={setAdjustedMax} placeholder="e.g. 18" />
-        <NumberField label="Flat bonus" value={bonus} onChange={setBonus} placeholder="e.g. 0.25" />
+        <NumberField label="Points earned" value={earned} onChange={setEarned} placeholder="15" />
+        <NumberField label="Original max" value={originalMax} onChange={setOriginalMax} placeholder="20" />
+        <NumberField label="Adjusted max" value={adjustedMax} onChange={setAdjustedMax} placeholder="18" />
+        <NumberField label="Flat bonus" value={bonus} onChange={setBonus} placeholder="0.25" />
       </div>
+
       {result !== null && (
-        <div className="mt-4 space-y-1 text-sm">
-          <div>
-            Original grade:{" "}
-            <span className={`font-semibold ${scale.colorFor(result.originalGrade)}`}>
-              {scale.format(result.originalGrade)}
-            </span>
-          </div>
-          <div>
-            Adjusted grade:{" "}
-            <span className={`font-semibold ${gradeValid ? scale.colorFor(result.adjustedGrade) : "text-rose-400"}`}>
-              {scale.format(result.adjustedGrade)}
-            </span>{" "}
-            <span className="text-slate-400">
-              ({result.delta >= 0 ? "+" : ""}
-              {result.delta.toFixed(2)})
-            </span>
-          </div>
-          {projectedAvg !== null && (
-            <div>
-              Projected new average:{" "}
-              <span className={`font-semibold ${scale.colorFor(projectedAvg)}`}>
-                {scale.format(projectedAvg)}
+        <div className="mt-4 rounded-xl border border-line bg-surface-2 p-3.5">
+          <div className="flex items-baseline justify-between">
+            <span className="text-sm text-muted">Adjusted grade</span>
+            <span className="flex items-baseline gap-2">
+              <span className={`font-readout text-2xl font-bold ${gradeValid ? scale.colorFor(result.adjustedGrade) : "text-fail"}`}>
+                {scale.format(result.adjustedGrade)}
               </span>
-            </div>
-          )}
+              <span className={`text-xs font-medium ${result.delta >= 0 ? "text-pass" : "text-fail"}`}>
+                {result.delta >= 0 ? "+" : ""}
+                {result.delta.toFixed(2)}
+              </span>
+            </span>
+          </div>
+          <div className="mt-1 text-xs text-faint">
+            was {scale.format(result.originalGrade)}
+            {projectedAvg !== null && (
+              <> · new subject average {scale.format(projectedAvg)}</>
+            )}
+          </div>
         </div>
       )}
-      <div className="mt-4 flex items-center gap-2">
-        <Button variant="ghost" disabled={!canSave} onClick={save}>
+
+      <div className="mt-auto pt-4">
+        <Button variant="ghost" disabled={!canSave} onClick={save} className="w-full">
           <Plus size={16} /> Save as grade
         </Button>
         {subjectId === null && (
-          <span className="text-xs text-slate-500">Select a subject to save</span>
+          <p className="mt-1.5 text-center text-xs text-faint">Open a subject to save.</p>
         )}
       </div>
     </Card>

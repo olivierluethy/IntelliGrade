@@ -31,11 +31,11 @@ export function GradeRow({ semesterId, subjectId, grade, scale }: Props) {
   };
 
   const input =
-    "w-20 rounded-md border border-slate-800 bg-slate-900 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400/60";
+    "w-16 rounded-md border border-line bg-surface-2 px-2 py-1 text-sm text-fg tabular-nums focus:outline-none focus:ring-2 focus:ring-brand/50";
 
   return (
-    <tr className="border-b border-slate-800/60">
-      <td className="py-2">
+    <tr className="border-b border-line-soft last:border-0 hover:bg-surface-2/40">
+      <td className="px-3 py-2.5">
         {editing ? (
           <input
             className={input}
@@ -46,12 +46,14 @@ export function GradeRow({ semesterId, subjectId, grade, scale }: Props) {
             onChange={(e) => setValue(e.target.value)}
           />
         ) : (
-          <span className={`font-semibold tabular-nums ${scale.colorFor(grade.value)}`}>
+          <span
+            className={`font-readout text-base font-semibold ${scale.colorFor(grade.value)}`}
+          >
             {scale.format(grade.value)}
           </span>
         )}
       </td>
-      <td className="py-2">
+      <td className="px-3 py-2.5">
         {editing ? (
           <input
             className={input}
@@ -62,11 +64,11 @@ export function GradeRow({ semesterId, subjectId, grade, scale }: Props) {
             onChange={(e) => setWeight(e.target.value)}
           />
         ) : (
-          <span className="tabular-nums text-slate-300">{grade.weight}</span>
+          <span className="tabular-nums text-muted">×{grade.weight}</span>
         )}
       </td>
-      <td className="py-2 text-slate-400">{grade.label ?? "—"}</td>
-      <td className="py-2">
+      <td className="px-3 py-2.5 text-muted">{grade.label ?? "—"}</td>
+      <td className="px-3 py-2.5">
         <div className="flex justify-end gap-1">
           {editing ? (
             <>

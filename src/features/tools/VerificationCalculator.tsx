@@ -5,6 +5,7 @@ import { useStore } from "../../store/useStore";
 import { NumberField } from "../../components/NumberField";
 import { Card } from "../../components/Card";
 import { Button } from "../../components/Button";
+import { SectionHeader } from "../../components/SectionHeader";
 import { ClipboardCheck, Plus } from "../../components/Icon";
 
 type Props = { scale: GradeScale; semesterId: string | null; subjectId: string | null };
@@ -36,45 +37,46 @@ export function VerificationCalculator({ scale, semesterId, subjectId }: Props) 
   };
 
   return (
-    <Card>
-      <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-200">
-        <ClipboardCheck size={16} className="text-indigo-400" />
-        Verify a teacher's grade
-      </div>
+    <Card className="flex h-full flex-col">
+      <SectionHeader
+        icon={ClipboardCheck}
+        title="Verify a grade"
+        hint="Turn your points into the grade you should have got — and check it against what the teacher wrote."
+      />
       <div className="grid gap-3 sm:grid-cols-2">
-        <NumberField label="Earned points" value={earned} onChange={setEarned} placeholder="e.g. 15" />
-        <NumberField label="Max points" value={max} onChange={setMax} placeholder="e.g. 20" />
+        <NumberField label="Points earned" value={earned} onChange={setEarned} placeholder="15" />
+        <NumberField label="Points possible" value={max} onChange={setMax} placeholder="20" />
         <NumberField label="Weight (optional)" value={weight} onChange={setWeight} placeholder="1" />
-        <NumberField label="Published grade (optional)" value={published} onChange={setPublished} placeholder="e.g. 4.5" />
+        <NumberField label="Teacher's grade (optional)" value={published} onChange={setPublished} placeholder="4.5" />
       </div>
+
       {result !== null && (
-        <div className="mt-4 space-y-1 text-sm">
-          <div>
-            Percentage:{" "}
-            <span className="font-semibold text-slate-200">{result.percentage.toFixed(1)}%</span>
-          </div>
-          <div>
-            Correct grade:{" "}
-            <span className={`font-semibold ${gradeValid ? scale.colorFor(result.grade) : "text-rose-400"}`}>
+        <div className="mt-4 rounded-xl border border-line bg-surface-2 p-3.5">
+          <div className="flex items-baseline justify-between">
+            <span className="text-sm text-muted">Correct grade</span>
+            <span className={`font-readout text-2xl font-bold ${gradeValid ? scale.colorFor(result.grade) : "text-fail"}`}>
               {scale.format(result.grade)}
-            </span>{" "}
-            <span className="text-slate-400">({result.isPassing ? "pass" : "fail"})</span>
+            </span>
+          </div>
+          <div className="mt-1 flex items-center justify-between text-xs text-faint">
+            <span>{result.percentage.toFixed(1)}% · {result.isPassing ? "passing" : "failing"}</span>
           </div>
           {result.matchesPublished !== undefined && (
-            <div className={result.matchesPublished ? "text-emerald-400" : "text-amber-400"}>
+            <div className={`mt-2 text-sm ${result.matchesPublished ? "text-pass" : "text-warn"}`}>
               {result.matchesPublished
-                ? "Matches the published grade."
-                : `Off by ${result.difference!.toFixed(2)} from the published grade.`}
+                ? "✓ Matches the teacher's grade."
+                : `Off by ${result.difference!.toFixed(2)} from the teacher's grade.`}
             </div>
           )}
         </div>
       )}
-      <div className="mt-4 flex items-center gap-2">
-        <Button variant="ghost" disabled={!canSave} onClick={save}>
+
+      <div className="mt-auto pt-4">
+        <Button variant="ghost" disabled={!canSave} onClick={save} className="w-full">
           <Plus size={16} /> Save as grade
         </Button>
         {subjectId === null && (
-          <span className="text-xs text-slate-500">Select a subject to save</span>
+          <p className="mt-1.5 text-center text-xs text-faint">Open a subject to save.</p>
         )}
       </div>
     </Card>

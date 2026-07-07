@@ -2,7 +2,15 @@ import { useState } from "react";
 import { SemesterSwitcher } from "./SemesterSwitcher";
 import { SubjectList } from "./SubjectList";
 import { IconButton } from "../components/IconButton";
-import { GraduationCap, BookOpen, Wrench, BarChart3, Download, Bell, Menu } from "../components/Icon";
+import {
+  GraduationCap,
+  BookOpen,
+  Wrench,
+  BarChart3,
+  Download,
+  Bell,
+  Menu,
+} from "../components/Icon";
 
 type View = "grades" | "tools" | "insights" | "export" | "alerts";
 
@@ -14,6 +22,14 @@ type Props = {
   alertCount: number;
 };
 
+const NAV: { id: View; label: string; icon: typeof BookOpen; hint: string }[] = [
+  { id: "grades", label: "Grades", icon: BookOpen, hint: "Track & plan a subject" },
+  { id: "insights", label: "Insights", icon: BarChart3, hint: "Trends & advice" },
+  { id: "tools", label: "Tools", icon: Wrench, hint: "Grade calculators" },
+  { id: "export", label: "Export", icon: Download, hint: "PDF & Excel report" },
+  { id: "alerts", label: "Alerts", icon: Bell, hint: "Needs attention" },
+];
+
 export function Sidebar({
   selectedSubjectId,
   onSelectSubject,
@@ -22,33 +38,20 @@ export function Sidebar({
   alertCount,
 }: Props) {
   const [open, setOpen] = useState(false);
-  const navBtn = (active: boolean) =>
-    `flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400/60 ${
-      active ? "bg-indigo-500 text-white" : "bg-slate-800 text-slate-300 hover:bg-slate-700"
-    }`;
-
-  const items: {
-    id: View;
-    label: string;
-    icon: JSX.Element;
-    full?: boolean;
-    badge?: number;
-  }[] = [
-    { id: "grades", label: "Grades", icon: <BookOpen size={16} />, full: true },
-    { id: "tools", label: "Tools", icon: <Wrench size={16} /> },
-    { id: "insights", label: "Insights", icon: <BarChart3 size={16} /> },
-    { id: "export", label: "Export", icon: <Download size={16} /> },
-    { id: "alerts", label: "Alerts", icon: <Bell size={16} />, badge: alertCount },
-  ];
 
   return (
-    <aside className="flex w-full flex-col gap-6 border-b border-slate-800 bg-slate-900/40 p-4 md:h-screen md:w-72 md:border-b-0 md:border-r">
+    <aside className="flex w-full flex-col gap-6 border-b border-line bg-ink-2/70 p-4 backdrop-blur md:h-screen md:w-[264px] md:shrink-0 md:overflow-y-auto md:border-b-0 md:border-r">
       <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <GraduationCap className="text-indigo-400" size={22} />
-          <span className="text-lg font-semibold tracking-tight">
-            IntelliGrade
+        <div className="flex items-center gap-2.5">
+          <span className="grid size-9 place-items-center rounded-xl bg-brand/15 text-brand">
+            <GraduationCap size={20} />
           </span>
+          <div className="leading-tight">
+            <div className="font-display text-lg font-semibold tracking-tight">
+              IntelliGrade
+            </div>
+            <div className="text-[0.7rem] text-faint">Grade planner</div>
+          </div>
         </div>
         <div className="md:hidden">
           <IconButton
@@ -58,31 +61,50 @@ export function Sidebar({
           />
         </div>
       </div>
+
       <div
         className={`${open ? "flex" : "hidden"} flex-col gap-6 md:flex`}
         id="sidebar-panel"
       >
-        <nav className="grid grid-cols-2 gap-2" aria-label="Primary">
-          {items.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className={`${navBtn(view === item.id)} ${item.full ? "col-span-2" : ""}`}
-              aria-current={view === item.id ? "page" : undefined}
-              onClick={() => {
-                onChangeView(item.id);
-                setOpen(false);
-              }}
-            >
-              {item.icon} {item.label}
-              {item.badge ? (
-                <span className="ml-0.5 rounded-full bg-rose-500 px-1.5 text-xs font-semibold text-white">
-                  {item.badge}
-                </span>
-              ) : null}
-            </button>
-          ))}
+        <nav className="space-y-1" aria-label="Primary">
+          {NAV.map((item) => {
+            const active = view === item.id;
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                aria-current={active ? "page" : undefined}
+                onClick={() => {
+                  onChangeView(item.id);
+                  setOpen(false);
+                }}
+                className={`group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 ${
+                  active
+                    ? "bg-brand/15 text-fg ring-1 ring-inset ring-brand/30"
+                    : "text-muted hover:bg-surface-2 hover:text-fg"
+                }`}
+              >
+                <Icon
+                  size={18}
+                  className={active ? "text-brand-bright" : "text-faint group-hover:text-muted"}
+                />
+                <span className="flex-1 text-sm font-medium">{item.label}</span>
+                {item.id === "alerts" && alertCount > 0 ? (
+                  <span className="rounded-full bg-fail/90 px-1.5 text-xs font-semibold text-white">
+                    {alertCount}
+                  </span>
+                ) : (
+                  <span className="text-[0.7rem] text-faint opacity-0 transition-opacity group-hover:opacity-100">
+                    {item.hint}
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </nav>
+
+        <div className="h-px bg-line-soft" />
         <SemesterSwitcher />
         <SubjectList
           selectedSubjectId={selectedSubjectId}
