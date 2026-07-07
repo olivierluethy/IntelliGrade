@@ -3,6 +3,7 @@ import { useStore } from "../store/useStore";
 import { Button } from "../components/Button";
 import { Plus } from "../components/Icon";
 import type { GradeScale } from "../domain/grade-scale";
+import { parseGradeInput } from "../domain/parseGradeInput";
 
 type Props = { semesterId: string; subjectId: string; scale: GradeScale };
 
@@ -14,19 +15,14 @@ export function AddGradeForm({ semesterId, subjectId, scale }: Props) {
   const [error, setError] = useState("");
 
   const submit = () => {
-    const v = parseFloat(value);
-    const w = parseFloat(weight);
-    if (Number.isNaN(v) || !scale.clampValid(v)) {
-      setError(`Grade must be between ${scale.min} and ${scale.max}.`);
-      return;
-    }
-    if (Number.isNaN(w) || w <= 0) {
-      setError("Weight must be a positive number.");
+    const parsed = parseGradeInput(value, weight, scale);
+    if (!parsed.ok) {
+      setError(parsed.error);
       return;
     }
     addGrade(semesterId, subjectId, {
-      value: v,
-      weight: w,
+      value: parsed.value,
+      weight: parsed.weight,
       label: label.trim() || undefined,
     });
     setValue("");

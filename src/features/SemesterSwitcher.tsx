@@ -29,10 +29,14 @@ export function SemesterSwitcher() {
 
   return (
     <div className="space-y-2">
-      <label className="text-xs font-medium uppercase tracking-wide text-slate-500">
+      <label
+        htmlFor="semester-select"
+        className="text-xs font-medium uppercase tracking-wide text-slate-500"
+      >
         Semester
       </label>
       <select
+        id="semester-select"
         value={activeSemesterId ?? ""}
         onChange={(e) => setActive(e.target.value)}
         aria-label="Select semester"

@@ -23,6 +23,7 @@ export {
   Minus,
   BarChart3,
   Lightbulb,
+  Menu,
   Download,
   FileText,
   FileSpreadsheet,

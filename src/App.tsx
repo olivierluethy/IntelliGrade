@@ -15,17 +15,17 @@ export default function App() {
   const [view, setView] = useState<
     "grades" | "tools" | "insights" | "export" | "alerts"
   >("grades");
-  const data = useStore((s) => s.data);
+  const semesters = useStore((s) => s.data.semesters);
+  const activeSemesterId = useStore((s) => s.data.activeSemesterId);
   const setActiveSemester = useStore((s) => s.setActiveSemester);
-  const activeSemesterId = data.activeSemesterId;
-  const activeSemester = data.semesters.find((s) => s.id === activeSemesterId);
+  const activeSemester = semesters.find((s) => s.id === activeSemesterId);
   const effectiveSubjectId =
     selectedSubjectId !== null &&
     activeSemester?.subjects.some((sub) => sub.id === selectedSubjectId)
       ? selectedSubjectId
       : null;
 
-  const alerts = computeAlerts(data.semesters, new Date());
+  const alerts = computeAlerts(semesters, new Date());
 
   const openSubject = (semesterId: string, subjectId: string) => {
     setActiveSemester(semesterId);
