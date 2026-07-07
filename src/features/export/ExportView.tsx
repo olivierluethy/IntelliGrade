@@ -118,7 +118,12 @@ export function ExportView({ semesterId }: Props) {
 
         {/* Live preview */}
         <div>
-          <div className="mb-2 eyebrow">Live preview — exactly what you'll get</div>
+          <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+            <span className="eyebrow">Live preview</span>
+            <span className="text-xs text-faint">
+              Same content — the download uses a light, print-friendly layout.
+            </span>
+          </div>
           <ReportPreview report={report} />
         </div>
       </div>

@@ -1,76 +1,73 @@
 import type { SemesterReport } from "../../domain/export/report";
 
-/** WYSIWYG-ish HTML preview of the report that PDF/Excel will contain. */
+const statusClass: Record<string, string> = {
+  Pass: "text-pass",
+  Fail: "text-fail",
+};
+
+/** Dark-themed in-app preview of the report the PDF/Excel will contain. */
 export function ReportPreview({ report }: { report: SemesterReport }) {
   return (
-    <div className="rounded-lg bg-white p-6 text-slate-900 shadow-inner">
-      <h1 className="text-xl font-bold">{report.title}</h1>
-      <p className="mt-1 text-sm text-slate-500">Scale: {report.scaleLabel}</p>
-
-      <div className="mt-4 flex flex-wrap gap-6 border-y border-slate-200 py-3 text-sm">
-        <div>
-          <span className="text-slate-500">Semester average: </span>
-          <span className="font-semibold tabular-nums">
-            {report.summary.averageText}
-          </span>
-        </div>
-        <div>
-          <span className="text-slate-500">Passing: </span>
-          <span className="font-semibold tabular-nums">
-            {report.summary.passingText}
-          </span>
-        </div>
-        <div>
-          <span className="text-slate-500">Subjects: </span>
-          <span className="font-semibold tabular-nums">
-            {report.summary.subjectCount}
-          </span>
-        </div>
+    <div className="card overflow-hidden">
+      <div className="border-b border-line bg-surface-2 px-5 py-4">
+        <h2 className="font-display text-xl font-semibold text-fg">{report.title}</h2>
+        <p className="mt-0.5 text-sm text-faint">Scale: {report.scaleLabel}</p>
       </div>
 
-      <table className="mt-4 w-full border-collapse text-sm">
+      <div className="flex flex-wrap gap-x-8 gap-y-2 border-b border-line px-5 py-3 text-sm">
+        <Summary label="Semester average" value={report.summary.averageText} />
+        <Summary label="Passing" value={report.summary.passingText} />
+        <Summary label="Subjects" value={String(report.summary.subjectCount)} />
+      </div>
+
+      <table className="w-full text-left text-sm">
         <thead>
-          <tr className="bg-indigo-600 text-left text-white">
-            <th className="px-3 py-2 font-semibold">Subject</th>
-            <th className="px-3 py-2 font-semibold">Average</th>
-            <th className="px-3 py-2 font-semibold">Target</th>
-            <th className="px-3 py-2 font-semibold">Status</th>
-            <th className="px-3 py-2 font-semibold">Grades</th>
+          <tr className="border-b border-line text-faint">
+            <th className="px-5 py-2.5 eyebrow">Subject</th>
+            <th className="px-5 py-2.5 eyebrow">Average</th>
+            <th className="px-5 py-2.5 eyebrow">Target</th>
+            <th className="px-5 py-2.5 eyebrow">Status</th>
+            <th className="px-5 py-2.5 eyebrow">Grades</th>
           </tr>
         </thead>
         <tbody>
           {report.subjects.length === 0 ? (
             <tr>
-              <td colSpan={5} className="px-3 py-3 text-center text-slate-400">
-                No subjects.
+              <td colSpan={5} className="px-5 py-6 text-center text-faint">
+                No subjects yet.
               </td>
             </tr>
           ) : (
             report.subjects.map((s, i) => (
               <tr
                 key={s.name + i}
-                className={i % 2 ? "bg-slate-50" : "bg-white"}
+                className="border-b border-line-soft last:border-0"
               >
-                <td className="px-3 py-2">{s.name}</td>
-                <td className="px-3 py-2 tabular-nums">{s.averageText}</td>
-                <td className="px-3 py-2 tabular-nums">{s.targetText}</td>
+                <td className="px-5 py-2.5 font-medium text-fg">{s.name}</td>
+                <td className="px-5 py-2.5 font-readout tabular-nums text-fg">
+                  {s.averageText}
+                </td>
+                <td className="px-5 py-2.5 tabular-nums text-muted">{s.targetText}</td>
                 <td
-                  className={`px-3 py-2 font-medium ${
-                    s.status === "Pass"
-                      ? "text-emerald-600"
-                      : s.status === "Fail"
-                        ? "text-rose-600"
-                        : "text-slate-400"
-                  }`}
+                  className={`px-5 py-2.5 font-medium ${statusClass[s.status] ?? "text-faint"}`}
                 >
                   {s.status}
                 </td>
-                <td className="px-3 py-2 tabular-nums">{s.gradeCount}</td>
+                <td className="px-5 py-2.5 tabular-nums text-muted">{s.gradeCount}</td>
               </tr>
             ))
           )}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+function Summary({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <span className="text-faint">{label}: </span>
+      <span className="font-readout font-semibold tabular-nums text-fg">{value}</span>
     </div>
   );
 }
