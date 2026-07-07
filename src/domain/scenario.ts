@@ -22,6 +22,23 @@ export function gradeNeeded(
   return (target * (W + weight) - S) / weight;
 }
 
+/**
+ * The single grade you'd need on EACH of `count` equally-weighted upcoming
+ * assessments (each of weight `weightEach`) to reach `target` on average.
+ *
+ * Scoring the same grade x on N exams of weight w is equivalent to one lump of
+ * weight N*w, so this reduces to `gradeNeeded` with the combined weight.
+ */
+export function gradeNeededPerExam(
+  grades: Grade[],
+  target: number,
+  count: number,
+  weightEach = 1
+): number {
+  if (count <= 0 || weightEach <= 0) return NaN;
+  return gradeNeeded(grades, target, count * weightEach);
+}
+
 export function badGradesAffordable(
   grades: Grade[],
   target: number,
