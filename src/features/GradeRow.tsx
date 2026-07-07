@@ -3,6 +3,7 @@ import { useStore } from "../store/useStore";
 import { IconButton } from "../components/IconButton";
 import { Trash2, Pencil, Check, X } from "../components/Icon";
 import type { GradeScale } from "../domain/grade-scale";
+import { parseGradeInput } from "../domain/parseGradeInput";
 import type { Grade as GradeType } from "../domain/types";
 
 type Props = {
@@ -20,11 +21,12 @@ export function GradeRow({ semesterId, subjectId, grade, scale }: Props) {
   const [weight, setWeight] = useState(String(grade.weight));
 
   const save = () => {
-    const v = parseFloat(value);
-    const w = parseFloat(weight);
-    if (Number.isNaN(v) || !scale.clampValid(v) || Number.isNaN(w) || w <= 0)
-      return;
-    updateGrade(semesterId, subjectId, grade.id, { value: v, weight: w });
+    const parsed = parseGradeInput(value, weight, scale);
+    if (!parsed.ok) return;
+    updateGrade(semesterId, subjectId, grade.id, {
+      value: parsed.value,
+      weight: parsed.weight,
+    });
     setEditing(false);
   };
 

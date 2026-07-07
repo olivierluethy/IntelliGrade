@@ -14,9 +14,16 @@ import { AffordCard } from "./scenario/AffordCard";
 type Props = { semesterId: string; subjectId: string };
 
 export function SubjectDetail({ semesterId, subjectId }: Props) {
-  const data = useStore((s) => s.data);
-  const semester = data.semesters.find((s) => s.id === semesterId);
-  const subject = semester?.subjects.find((s) => s.id === subjectId);
+  // Subscribe to just this semester/subject so unrelated store mutations don't
+  // re-render the detail pane.
+  const semester = useStore((s) =>
+    s.data.semesters.find((x) => x.id === semesterId)
+  );
+  const subject = useStore((s) =>
+    s.data.semesters
+      .find((x) => x.id === semesterId)
+      ?.subjects.find((y) => y.id === subjectId)
+  );
   if (!semester || !subject) return null;
 
   const scale = getScale(semester.scaleId);
