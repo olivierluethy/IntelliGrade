@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gradeNeeded, badGradesAffordable } from "./scenario";
+import { gradeNeeded, gradeNeededPerExam, badGradesAffordable } from "./scenario";
 import type { Grade } from "./types";
 import { swissScale } from "./grade-scale/swiss";
 
@@ -36,6 +36,33 @@ describe("gradeNeeded", () => {
 
   it("weight <= 0 → NaN", () => {
     expect(Number.isNaN(gradeNeeded([g(4, 1)], 5, 0))).toBe(true);
+  });
+});
+
+describe("gradeNeededPerExam", () => {
+  // grades [3,4,6,5] all weight 1 → S=18, W=4 (avg 4.5)
+  const grades = [g(3, 1), g(4, 1), g(6, 1), g(5, 1)];
+
+  it("finds the uniform grade needed across N equally-weighted exams", () => {
+    // target 4 over 5 exams: (4*(4+5) - 18) / 5 = 18/5 = 3.6
+    // check: (18 + 3.6*5) / (4+5) = 36/9 = 4 ✓
+    expect(gradeNeededPerExam(grades, 4, 5)).toBeCloseTo(3.6);
+  });
+
+  it("with one exam equals gradeNeeded of weight 1", () => {
+    expect(gradeNeededPerExam(grades, 5, 1)).toBeCloseTo(gradeNeeded(grades, 5, 1));
+  });
+
+  it("respects a per-exam weight", () => {
+    // 2 exams of weight 2 == one lump of weight 4
+    expect(gradeNeededPerExam(grades, 5, 2, 2)).toBeCloseTo(
+      gradeNeeded(grades, 5, 4)
+    );
+  });
+
+  it("returns NaN for a non-positive count or weight", () => {
+    expect(Number.isNaN(gradeNeededPerExam(grades, 4, 0))).toBe(true);
+    expect(Number.isNaN(gradeNeededPerExam(grades, 4, 3, 0))).toBe(true);
   });
 });
 

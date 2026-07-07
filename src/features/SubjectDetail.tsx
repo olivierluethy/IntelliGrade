@@ -89,6 +89,7 @@ export function SubjectDetail({ semesterId, subjectId }: Props) {
             grades={subject.grades}
             target={subject.targetGrade}
             scale={scale}
+            upcomingExams={subject.exams.length}
           />
           <AffordCard
             grades={subject.grades}
