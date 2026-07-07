@@ -3,6 +3,7 @@ import { Sidebar } from "./features/Sidebar";
 import { SubjectDetail } from "./features/SubjectDetail";
 import { ToolsPage } from "./features/tools/ToolsPage";
 import { AnalyticsView } from "./features/analytics/AnalyticsView";
+import { ExportView } from "./features/export/ExportView";
 import { AlertsView } from "./features/alerts/AlertsView";
 import { useStore } from "./store/useStore";
 import { computeAlerts } from "./domain/alerts";
@@ -12,7 +13,7 @@ export default function App() {
     null
   );
   const [view, setView] = useState<
-    "grades" | "tools" | "insights" | "alerts"
+    "grades" | "tools" | "insights" | "export" | "alerts"
   >("grades");
   const data = useStore((s) => s.data);
   const setActiveSemester = useStore((s) => s.setActiveSemester);
@@ -49,6 +50,8 @@ export default function App() {
             semesterId={activeSemesterId ?? null}
             onOpenSubject={openSubject}
           />
+        ) : view === "export" ? (
+          <ExportView semesterId={activeSemesterId ?? null} />
         ) : view === "tools" ? (
           <ToolsPage
             semesterId={activeSemesterId ?? null}
