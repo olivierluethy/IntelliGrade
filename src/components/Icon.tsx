@@ -19,5 +19,12 @@ export {
   Bell,
   AlertTriangle,
   TrendingDown,
+  TrendingUp,
+  Minus,
+  BarChart3,
+  Lightbulb,
+  Download,
+  FileText,
+  FileSpreadsheet,
   FileWarning,
 } from "lucide-react";

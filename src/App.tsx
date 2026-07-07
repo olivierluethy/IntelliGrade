@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Sidebar } from "./features/Sidebar";
 import { SubjectDetail } from "./features/SubjectDetail";
 import { ToolsPage } from "./features/tools/ToolsPage";
+import { AnalyticsView } from "./features/analytics/AnalyticsView";
 import { AlertsView } from "./features/alerts/AlertsView";
 import { useStore } from "./store/useStore";
 import { computeAlerts } from "./domain/alerts";
@@ -10,7 +11,9 @@ export default function App() {
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
     null
   );
-  const [view, setView] = useState<"grades" | "tools" | "alerts">("grades");
+  const [view, setView] = useState<
+    "grades" | "tools" | "insights" | "alerts"
+  >("grades");
   const data = useStore((s) => s.data);
   const setActiveSemester = useStore((s) => s.setActiveSemester);
   const activeSemesterId = data.activeSemesterId;
@@ -41,6 +44,11 @@ export default function App() {
       <main className="flex-1 p-6">
         {view === "alerts" ? (
           <AlertsView alerts={alerts} onOpenSubject={openSubject} />
+        ) : view === "insights" ? (
+          <AnalyticsView
+            semesterId={activeSemesterId ?? null}
+            onOpenSubject={openSubject}
+          />
         ) : view === "tools" ? (
           <ToolsPage
             semesterId={activeSemesterId ?? null}
