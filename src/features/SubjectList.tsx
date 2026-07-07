@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useStore } from "../store/useStore";
-import { Button } from "../components/Button";
+import { IconButton } from "../components/IconButton";
 import { Plus, ChevronRight } from "../components/Icon";
 
 type Props = {
@@ -25,17 +25,13 @@ export function SubjectList({ selectedSubjectId, onSelectSubject }: Props) {
 
   if (!semester) {
     return (
-      <p className="text-sm text-slate-500">
-        Create a semester to add subjects.
-      </p>
+      <p className="text-sm text-faint">Create a semester to add subjects.</p>
     );
   }
 
   return (
     <div className="space-y-2">
-      <label className="text-xs font-medium uppercase tracking-wide text-slate-500">
-        Subjects
-      </label>
+      <div className="eyebrow">Subjects</div>
       <ul className="space-y-1">
         {semester.subjects.map((sub) => {
           const active = sub.id === selectedSubjectId;
@@ -43,21 +39,24 @@ export function SubjectList({ selectedSubjectId, onSelectSubject }: Props) {
             <li key={sub.id}>
               <button
                 onClick={() => onSelectSubject(sub.id)}
-                className={`flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400/60 ${
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 ${
                   active
-                    ? "bg-indigo-500/15 text-indigo-300"
-                    : "text-slate-300 hover:bg-slate-800"
+                    ? "bg-brand/15 font-medium text-brand-bright"
+                    : "text-muted hover:bg-surface-2 hover:text-fg"
                 }`}
               >
-                {sub.name}
-                <ChevronRight size={14} className="text-slate-600" />
+                <span className="truncate">{sub.name}</span>
+                <ChevronRight
+                  size={14}
+                  className={active ? "text-brand" : "text-faint"}
+                />
               </button>
             </li>
           );
         })}
         {semester.subjects.length === 0 && (
-          <li className="px-2.5 py-1 text-sm text-slate-500">
-            No subjects yet.
+          <li className="rounded-lg border border-dashed border-line px-3 py-2 text-sm text-faint">
+            No subjects yet — add your first below.
           </li>
         )}
       </ul>
@@ -68,11 +67,9 @@ export function SubjectList({ selectedSubjectId, onSelectSubject }: Props) {
           onKeyDown={(e) => e.key === "Enter" && submit()}
           placeholder="Add subject"
           aria-label="New subject name"
-          className="min-w-0 flex-1 rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400/60"
+          className="field min-w-0 flex-1"
         />
-        <Button onClick={submit}>
-          <Plus size={16} />
-        </Button>
+        <IconButton icon={Plus} label="Add subject" onClick={submit} />
       </div>
     </div>
   );

@@ -24,15 +24,9 @@ export function SemesterSwitcher() {
     setAdding(false);
   };
 
-  const control =
-    "w-full rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400/60";
-
   return (
     <div className="space-y-2">
-      <label
-        htmlFor="semester-select"
-        className="text-xs font-medium uppercase tracking-wide text-slate-500"
-      >
+      <label htmlFor="semester-select" className="eyebrow">
         Semester
       </label>
       <select
@@ -40,7 +34,7 @@ export function SemesterSwitcher() {
         value={activeSemesterId ?? ""}
         onChange={(e) => setActive(e.target.value)}
         aria-label="Select semester"
-        className={control}
+        className="field"
       >
         {semesters.length === 0 && <option value="">No semesters yet</option>}
         {semesters.map((s) => (
@@ -50,13 +44,13 @@ export function SemesterSwitcher() {
         ))}
       </select>
       {activeSemester && (
-        <p className="text-xs text-slate-500">
-          Scale: {getScale(activeSemester.scaleId).label}
+        <p className="text-xs text-faint">
+          Grading scale: {getScale(activeSemester.scaleId).label}
         </p>
       )}
 
       {adding ? (
-        <div className="space-y-1.5">
+        <div className="space-y-2 rounded-xl border border-line bg-surface p-2.5">
           <input
             autoFocus
             value={name}
@@ -64,13 +58,13 @@ export function SemesterSwitcher() {
             onKeyDown={(e) => e.key === "Enter" && submit()}
             placeholder="e.g. HS25"
             aria-label="New semester name"
-            className={control}
+            className="field"
           />
           <select
             value={scaleId}
             onChange={(e) => setScaleId(e.target.value)}
             aria-label="Grade scale"
-            className={control}
+            className="field"
           >
             {SCALE_LIST.map((s) => (
               <option key={s.id} value={s.id}>
@@ -78,10 +72,17 @@ export function SemesterSwitcher() {
               </option>
             ))}
           </select>
-          <Button onClick={submit}>Add</Button>
+          <div className="flex gap-2">
+            <Button onClick={submit} className="flex-1">
+              Add semester
+            </Button>
+            <Button variant="ghost" onClick={() => setAdding(false)}>
+              Cancel
+            </Button>
+          </div>
         </div>
       ) : (
-        <Button variant="ghost" onClick={() => setAdding(true)}>
+        <Button variant="ghost" onClick={() => setAdding(true)} className="w-full">
           <Plus size={16} /> New semester
         </Button>
       )}

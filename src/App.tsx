@@ -5,8 +5,10 @@ import { ToolsPage } from "./features/tools/ToolsPage";
 import { AnalyticsView } from "./features/analytics/AnalyticsView";
 import { ExportView } from "./features/export/ExportView";
 import { AlertsView } from "./features/alerts/AlertsView";
+import { EmptyState } from "./components/EmptyState";
 import { useStore } from "./store/useStore";
 import { computeAlerts } from "./domain/alerts";
+import { GraduationCap } from "./components/Icon";
 
 export default function App() {
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
@@ -34,7 +36,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col md:flex-row">
+    <div className="app-bg flex min-h-screen flex-col md:flex-row">
       <Sidebar
         selectedSubjectId={effectiveSubjectId}
         onSelectSubject={setSelectedSubjectId}
@@ -42,36 +44,43 @@ export default function App() {
         onChangeView={setView}
         alertCount={alerts.length}
       />
-      <main className="flex-1 p-6">
-        {view === "alerts" ? (
-          <AlertsView alerts={alerts} onOpenSubject={openSubject} />
-        ) : view === "insights" ? (
-          <AnalyticsView
-            semesterId={activeSemesterId ?? null}
-            onOpenSubject={openSubject}
-          />
-        ) : view === "export" ? (
-          <ExportView semesterId={activeSemesterId ?? null} />
-        ) : view === "tools" ? (
-          <ToolsPage
-            semesterId={activeSemesterId ?? null}
-            subjectId={effectiveSubjectId}
-          />
-        ) : effectiveSubjectId && activeSemesterId ? (
-          <SubjectDetail
-            semesterId={activeSemesterId}
-            subjectId={effectiveSubjectId}
-          />
-        ) : (
-          <div className="grid h-full place-items-center text-center">
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold">Welcome to IntelliGrade</h2>
-              <p className="text-slate-400">
-                Create a semester, add a subject, and start tracking grades.
-              </p>
-            </div>
-          </div>
-        )}
+      <main className="min-w-0 flex-1">
+        <div className="mx-auto w-full max-w-[1400px] px-5 py-6 md:px-8 md:py-8">
+          {view === "alerts" ? (
+            <AlertsView alerts={alerts} onOpenSubject={openSubject} />
+          ) : view === "insights" ? (
+            <AnalyticsView
+              semesterId={activeSemesterId ?? null}
+              onOpenSubject={openSubject}
+            />
+          ) : view === "export" ? (
+            <ExportView semesterId={activeSemesterId ?? null} />
+          ) : view === "tools" ? (
+            <ToolsPage
+              semesterId={activeSemesterId ?? null}
+              subjectId={effectiveSubjectId}
+            />
+          ) : effectiveSubjectId && activeSemesterId ? (
+            <SubjectDetail
+              semesterId={activeSemesterId}
+              subjectId={effectiveSubjectId}
+            />
+          ) : (
+            <EmptyState
+              icon={GraduationCap}
+              title={
+                activeSemester
+                  ? "Pick a subject to get started"
+                  : "Welcome to IntelliGrade"
+              }
+              description={
+                activeSemester
+                  ? "Choose a subject on the left, or add one, to track grades and plan toward a target."
+                  : "Create a semester on the left, add a subject, and start tracking grades and planning ahead."
+              }
+            />
+          )}
+        </div>
       </main>
     </div>
   );
