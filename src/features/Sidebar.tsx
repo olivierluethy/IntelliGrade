@@ -1,8 +1,8 @@
 import { SemesterSwitcher } from "./SemesterSwitcher";
 import { SubjectList } from "./SubjectList";
-import { GraduationCap, BookOpen, Wrench, Bell } from "../components/Icon";
+import { GraduationCap, BookOpen, Wrench, BarChart3, Bell } from "../components/Icon";
 
-type View = "grades" | "tools" | "alerts";
+type View = "grades" | "tools" | "insights" | "alerts";
 
 type Props = {
   selectedSubjectId: string | null;
@@ -48,6 +48,14 @@ export function Sidebar({
           onClick={() => onChangeView("tools")}
         >
           <Wrench size={16} /> Tools
+        </button>
+        <button
+          type="button"
+          className={navBtn(view === "insights")}
+          aria-current={view === "insights" ? "page" : undefined}
+          onClick={() => onChangeView("insights")}
+        >
+          <BarChart3 size={16} /> Insights
         </button>
         <button
           type="button"
