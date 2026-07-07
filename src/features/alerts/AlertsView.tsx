@@ -47,7 +47,7 @@ function describe(alert: Alert): { icon: JSX.Element; text: string; tone: string
 
 export function AlertsView({ alerts, onOpenSubject }: Props) {
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
+    <div className="space-y-6">
       <header>
         <h1 className="font-display text-3xl font-semibold tracking-tight">Alerts</h1>
         <p className="mt-1 text-sm text-muted">
@@ -64,7 +64,7 @@ export function AlertsView({ alerts, onOpenSubject }: Props) {
           description="No deadlines slipping, no missing grades, nothing below target. Add exams and targets to your subjects and we'll flag anything that needs attention."
         />
       ) : (
-        <ul className="space-y-2">
+        <ul className="grid gap-2 lg:grid-cols-2">
           {alerts.map((alert, i) => {
             const { icon, text } = describe(alert);
             return (
