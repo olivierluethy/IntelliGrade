@@ -10,18 +10,30 @@ export function ToolsPage({ semesterId, subjectId }: Props) {
   const data = useStore((s) => s.data);
   const semester = data.semesters.find((s) => s.id === semesterId);
   const scale = getScale(semester?.scaleId ?? "swiss");
+  const subject = semester?.subjects.find((s) => s.id === subjectId);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
+    <div className="space-y-6">
       <header>
-        <h2 className="text-2xl font-semibold tracking-tight">Tools</h2>
-        <p className="text-sm text-slate-400">
-          Verify grades, model curves, and compute percentage changes.
+        <h1 className="font-display text-3xl font-semibold tracking-tight">Tools</h1>
+        <p className="mt-1 text-sm text-muted">
+          Quick grade calculators.{" "}
+          {subject ? (
+            <>
+              Results can be saved straight into{" "}
+              <span className="font-medium text-brand-bright">{subject.name}</span>.
+            </>
+          ) : (
+            <>Open a subject first to save any result as a grade.</>
+          )}
         </p>
       </header>
-      <VerificationCalculator scale={scale} semesterId={semesterId} subjectId={subjectId} />
-      <CurveCalculator scale={scale} semesterId={semesterId} subjectId={subjectId} />
-      <GradeChangeCalculator />
+
+      <div className="grid items-start gap-6 lg:grid-cols-2 xl:grid-cols-3">
+        <VerificationCalculator scale={scale} semesterId={semesterId} subjectId={subjectId} />
+        <CurveCalculator scale={scale} semesterId={semesterId} subjectId={subjectId} />
+        <GradeChangeCalculator />
+      </div>
     </div>
   );
 }
