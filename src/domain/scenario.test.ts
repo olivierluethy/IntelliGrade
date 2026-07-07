@@ -59,9 +59,14 @@ describe("badGradesAffordable", () => {
     expect(badGradesAffordable([g(5, 1)], 5, 5, swissScale)).toBe(Infinity);
   });
 
-  it("returns NaN for a lower-is-better scale (unsupported)", () => {
+  it("supports lower-is-better scales", () => {
     const reversed = { ...swissScale, higherIsBetter: false };
-    expect(Number.isNaN(badGradesAffordable([g(6, 1)], 5, 4, reversed))).toBe(true);
+    // grades [2 w1] (good), target 4, bad 5 (worse): floor((2 - 4)/(4 - 5)) = 2
+    expect(badGradesAffordable([g(2, 1)], 4, 5, reversed)).toBe(2);
+    // bad grade better than target → unlimited
+    expect(badGradesAffordable([g(2, 1)], 4, 3, reversed)).toBe(Infinity);
+    // already worse than target → 0
+    expect(badGradesAffordable([g(5, 1)], 4, 6, reversed)).toBe(0);
   });
 
   it("returns 0 when current average exactly equals target", () => {
