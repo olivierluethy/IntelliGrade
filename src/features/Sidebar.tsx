@@ -1,8 +1,8 @@
 import { SemesterSwitcher } from "./SemesterSwitcher";
 import { SubjectList } from "./SubjectList";
-import { GraduationCap, BookOpen, Wrench, BarChart3, Bell } from "../components/Icon";
+import { GraduationCap, BookOpen, Wrench, BarChart3, Download, Bell } from "../components/Icon";
 
-type View = "grades" | "tools" | "insights" | "alerts";
+type View = "grades" | "tools" | "insights" | "export" | "alerts";
 
 type Props = {
   selectedSubjectId: string | null;
@@ -20,9 +20,23 @@ export function Sidebar({
   alertCount,
 }: Props) {
   const navBtn = (active: boolean) =>
-    `flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400/60 ${
+    `flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400/60 ${
       active ? "bg-indigo-500 text-white" : "bg-slate-800 text-slate-300 hover:bg-slate-700"
     }`;
+
+  const items: {
+    id: View;
+    label: string;
+    icon: JSX.Element;
+    full?: boolean;
+    badge?: number;
+  }[] = [
+    { id: "grades", label: "Grades", icon: <BookOpen size={16} />, full: true },
+    { id: "tools", label: "Tools", icon: <Wrench size={16} /> },
+    { id: "insights", label: "Insights", icon: <BarChart3 size={16} /> },
+    { id: "export", label: "Export", icon: <Download size={16} /> },
+    { id: "alerts", label: "Alerts", icon: <Bell size={16} />, badge: alertCount },
+  ];
 
   return (
     <aside className="flex w-full flex-col gap-6 border-b border-slate-800 bg-slate-900/40 p-4 md:h-screen md:w-72 md:border-b-0 md:border-r">
@@ -32,44 +46,23 @@ export function Sidebar({
           IntelliGrade
         </span>
       </div>
-      <nav className="flex gap-2" aria-label="Primary">
-        <button
-          type="button"
-          className={navBtn(view === "grades")}
-          aria-current={view === "grades" ? "page" : undefined}
-          onClick={() => onChangeView("grades")}
-        >
-          <BookOpen size={16} /> Grades
-        </button>
-        <button
-          type="button"
-          className={navBtn(view === "tools")}
-          aria-current={view === "tools" ? "page" : undefined}
-          onClick={() => onChangeView("tools")}
-        >
-          <Wrench size={16} /> Tools
-        </button>
-        <button
-          type="button"
-          className={navBtn(view === "insights")}
-          aria-current={view === "insights" ? "page" : undefined}
-          onClick={() => onChangeView("insights")}
-        >
-          <BarChart3 size={16} /> Insights
-        </button>
-        <button
-          type="button"
-          className={navBtn(view === "alerts")}
-          aria-current={view === "alerts" ? "page" : undefined}
-          onClick={() => onChangeView("alerts")}
-        >
-          <Bell size={16} /> Alerts
-          {alertCount > 0 && (
-            <span className="ml-0.5 rounded-full bg-rose-500 px-1.5 text-xs font-semibold text-white">
-              {alertCount}
-            </span>
-          )}
-        </button>
+      <nav className="grid grid-cols-2 gap-2" aria-label="Primary">
+        {items.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            className={`${navBtn(view === item.id)} ${item.full ? "col-span-2" : ""}`}
+            aria-current={view === item.id ? "page" : undefined}
+            onClick={() => onChangeView(item.id)}
+          >
+            {item.icon} {item.label}
+            {item.badge ? (
+              <span className="ml-0.5 rounded-full bg-rose-500 px-1.5 text-xs font-semibold text-white">
+                {item.badge}
+              </span>
+            ) : null}
+          </button>
+        ))}
       </nav>
       <SemesterSwitcher />
       <SubjectList
