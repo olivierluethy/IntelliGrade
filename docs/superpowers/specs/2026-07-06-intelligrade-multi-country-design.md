@@ -1,7 +1,7 @@
 # IntelliGrade — Multi-Country Grading (Sub-project 4) Design
 
 **Date:** 2026-07-06
-**Status:** Approved (design) — proceeding autonomously per user delegation
+**Status:** Implemented (2026-07-07) — all 4 tasks committed on `rebuild/multi-country`; `tsc -b`, 85 tests, and `npm run build` all green
 **Author:** Olivier Lüthy + Claude
 
 ---
