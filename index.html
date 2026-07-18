@@ -1,13 +1,342 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="/images/favicon.ico" />
+    <link rel="shortcut icon" href="images/favicon.ico" />
     <title>IntelliGrade</title>
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind (Play CDN — zero-build, matches this static site) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['"Space Grotesk"', "ui-sans-serif", "system-ui", "sans-serif"],
+              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+            },
+            colors: {
+              ink: {
+                950: "#080b12",
+                900: "#0c1018",
+                850: "#111725",
+                800: "#161d2e",
+              },
+              brand: {
+                cyan: "#22d3ee",
+                indigo: "#6366f1",
+                violet: "#8b5cf6",
+                magenta: "#e879f9",
+                amber: "#f59e0b",
+              },
+            },
+            keyframes: {
+              "modal-in": {
+                "0%": { opacity: "0", transform: "translateY(-24px) scale(.98)" },
+                "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+              },
+              "fade-in": {
+                "0%": { opacity: "0", transform: "translateY(8px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+            animation: {
+              "modal-in": "modal-in .35s cubic-bezier(.16,1,.3,1)",
+              "fade-in": "fade-in .5s ease-out both",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Reusable component classes (Tailwind-first, via @layer) -->
+    <style type="text/tailwindcss">
+      @layer components {
+        .btn {
+          @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900 disabled:cursor-not-allowed disabled:opacity-50;
+        }
+        .btn-primary {
+          @apply bg-gradient-to-r from-brand-cyan to-brand-indigo text-ink-950 shadow-lg shadow-brand-cyan/20 hover:brightness-110 focus-visible:ring-brand-cyan;
+        }
+        .btn-pdf {
+          @apply bg-rose-500/90 text-white shadow-lg shadow-rose-500/20 hover:bg-rose-500 focus-visible:ring-rose-400;
+        }
+        .btn-excel {
+          @apply bg-emerald-500/90 text-white shadow-lg shadow-emerald-500/20 hover:bg-emerald-500 focus-visible:ring-emerald-400;
+        }
+        .icon-btn {
+          @apply inline-flex items-center justify-center rounded-lg transition focus:outline-none focus-visible:ring-2;
+        }
+        .field {
+          @apply w-full rounded-xl border border-white/10 bg-ink-950/60 px-4 py-2.5 text-slate-100 placeholder:text-slate-500 focus:border-brand-cyan focus:outline-none focus:ring-2 focus:ring-brand-cyan/25;
+        }
+      }
+    </style>
+
+    <!-- Only what Tailwind utilities genuinely can't express: custom scrollbar + kbd chrome -->
+    <style>
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #2f3a4f;
+        border-radius: 9999px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #435268;
+        background-clip: content-box;
+      }
+      kbd {
+        font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+      }
+      /* Hide native number-input spinners for a cleaner field */
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+    </style>
+
+    <!-- Free libraries: jsPDF + autotable (PDF), ExcelJS (Excel) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+
+    <!-- App scripts -->
+    <script defer src="js/main.js"></script>
+    <script defer src="js/basic-calculations.js"></script>
+    <script defer src="js/modalGenerateTable.js"></script>
+    <script defer src="js/neededGrade.js"></script>
+    <script defer src="js/pdfMaker.js"></script>
+    <script defer src="js/convertToExcel.js"></script>
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+
+  <body class="min-h-screen bg-ink-950 font-sans text-slate-200 antialiased">
+    <!-- Watermark: on-brand logo, low opacity, behind everything, with a dark vignette so text stays readable -->
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <div
+        class="absolute left-1/2 top-1/2 h-[min(78vmin,680px)] w-[min(78vmin,680px)] -translate-x-1/2 -translate-y-1/2 bg-contain bg-center bg-no-repeat opacity-[0.06]"
+        style="background-image: url('images/watermark.png')"
+      ></div>
+      <div
+        class="absolute inset-0"
+        style="
+          background:
+            radial-gradient(60% 55% at 50% 38%, rgba(34, 211, 238, 0.1), transparent 70%),
+            radial-gradient(50% 50% at 80% 90%, rgba(139, 92, 246, 0.08), transparent 70%),
+            linear-gradient(180deg, rgba(8, 11, 18, 0.55), rgba(8, 11, 18, 0.9));
+        "
+      ></div>
+    </div>
+
+    <!-- Landing -->
+    <main class="relative flex min-h-screen flex-col items-center justify-center px-6 py-16 text-center">
+      <div class="animate-fade-in">
+        <div class="mb-7 flex items-center justify-center gap-4">
+          <img
+            src="images/watermark.png"
+            alt="IntelliGrade logo"
+            class="h-16 w-16 drop-shadow-[0_0_28px_rgba(34,211,238,0.35)]"
+          />
+          <h1
+            class="bg-gradient-to-r from-brand-cyan via-brand-violet to-brand-amber bg-clip-text font-display text-5xl font-bold tracking-tight text-transparent sm:text-6xl"
+          >
+            IntelliGrade
+          </h1>
+        </div>
+
+        <h2 class="mx-auto mb-10 max-w-md text-lg text-slate-400">
+          Calculate needed grade to get wished average
+        </h2>
+
+        <button id="modalCalculator" class="btn btn-primary px-8 py-3.5 text-base">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect width="16" height="20" x="4" y="2" rx="2" />
+            <line x1="8" x2="16" y1="6" y2="6" />
+            <line x1="16" x2="16" y1="14" y2="18" />
+            <path d="M16 10h.01" /><path d="M12 10h.01" /><path d="M8 10h.01" />
+            <path d="M12 14h.01" /><path d="M8 14h.01" /><path d="M12 18h.01" /><path d="M8 18h.01" />
+          </svg>
+          Calculate
+        </button>
+      </div>
+    </main>
+
+    <!-- Grades modal -->
+    <div
+      id="myModal"
+      class="hidden fixed inset-0 z-40 items-start justify-center overflow-y-auto bg-ink-950/80 p-4 backdrop-blur-sm sm:items-center"
+    >
+      <div
+        class="animate-modal-in w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-ink-900 shadow-2xl shadow-black/60"
+      >
+        <!-- Header -->
+        <div class="flex items-center justify-between gap-4 border-b border-white/10 bg-ink-850 px-6 py-4">
+          <div class="flex items-center gap-3">
+            <img src="images/watermark.png" alt="" class="h-7 w-7" />
+            <h2 class="font-display text-lg font-semibold text-white">Enter all your grades</h2>
+          </div>
+          <button
+            class="close icon-btn h-9 w-9 text-slate-400 hover:bg-white/10 hover:text-white focus-visible:ring-white/40"
+            title="Close this window"
+            aria-label="Close"
+          >
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Body -->
+        <div class="px-6 py-5">
+          <!-- Input row -->
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="grade" class="mb-1.5 block text-xs font-medium uppercase tracking-wide text-slate-400">Grade</label>
+              <div class="relative">
+                <input
+                  type="number"
+                  inputmode="decimal"
+                  step="0.1"
+                  min="1"
+                  max="6"
+                  placeholder="e.g. 5.5"
+                  id="grade"
+                  class="field pr-24 text-center font-display tabular-nums"
+                />
+                <span class="pointer-events-none absolute inset-y-0 right-2 flex items-center gap-1.5 text-slate-500">
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="9 10 4 15 9 20" /><path d="M20 4v7a4 4 0 0 1-4 4H4" />
+                  </svg>
+                  <kbd class="rounded-md border border-white/15 bg-white/5 px-1.5 py-0.5 text-[11px] font-semibold text-slate-300">Enter</kbd>
+                </span>
+              </div>
+              <p class="mt-1.5 text-[11px] text-slate-500">Swiss scale 1–6 · pass at 4.0 · hit Enter to add</p>
+              <p id="gradeError" class="mt-1 hidden text-xs font-medium text-rose-400"></p>
+            </div>
+
+            <div>
+              <label for="weighting" class="mb-1.5 block text-xs font-medium uppercase tracking-wide text-slate-400">Weight</label>
+              <input
+                type="number"
+                inputmode="decimal"
+                step="0.1"
+                min="0"
+                placeholder="Half 0.5 · Full 1 · Double 2"
+                id="weighting"
+                class="field text-center font-display tabular-nums"
+              />
+              <p class="mt-1.5 text-[11px] text-slate-500">Relative weight of this grade</p>
+              <p id="weightError" class="mt-1 hidden text-xs font-medium text-rose-400"></p>
+            </div>
+          </div>
+
+          <!-- Action buttons (revealed once a grade is added) -->
+          <div class="finish mt-5 hidden flex-wrap justify-center gap-3">
+            <button
+              class="finishBtn btn btn-primary"
+              title="When you have entered all your grades below."
+              onclick="calculateNeededGrade()"
+            >
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21.801 10A10 10 0 1 1 17 3.335" /><path d="m9 11 3 3L22 4" />
+              </svg>
+              Finish
+            </button>
+            <button
+              class="dwnPDF btn btn-pdf"
+              title="Download this table as a PDF"
+            >
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" x2="12" y1="15" y2="3" />
+              </svg>
+              Download PDF
+            </button>
+            <button
+              class="convertToExcel btn btn-excel"
+              title="Convert the following table to an Excel spreadsheet"
+              onclick="exportToExcel('gradesTable', 'myGrades.xlsx')"
+            >
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                <path d="M8 13h2" /><path d="M14 13h2" /><path d="M8 17h2" /><path d="M14 17h2" />
+              </svg>
+              Convert to Excel
+            </button>
+          </div>
+
+          <hr class="my-5 border-white/10" />
+
+          <!-- Results table -->
+          <div
+            id="gradesTable-container"
+            class="max-h-[320px] overflow-auto rounded-xl border border-white/10 bg-ink-950/40"
+          >
+            <table id="gradesTable" class="w-full text-sm">
+              <thead class="hidden">
+                <tr>
+                  <th class="sticky top-0 z-10 bg-ink-850 px-4 py-2.5 text-center font-medium text-slate-300">Grade</th>
+                  <th class="sticky top-0 z-10 bg-ink-850 px-4 py-2.5 text-center font-medium text-slate-300">Weight</th>
+                  <th class="sticky top-0 z-10 bg-ink-850 px-4 py-2.5 text-center font-medium text-slate-300">Action</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+            <div id="emptyState" class="flex flex-col items-center gap-3 px-6 py-12 text-center text-slate-500">
+              <svg class="h-8 w-8 opacity-60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /><path d="M9 15h6" /><path d="M9 11h2" />
+              </svg>
+              <p class="text-sm">No grades yet. Type a grade and weight, then hit <span class="font-semibold text-slate-400">Enter</span>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PDF preview modal -->
+    <div
+      id="ModalPDFPreview"
+      class="hidden fixed inset-0 z-50 items-center justify-center bg-ink-950/85 p-4 backdrop-blur-sm"
+    >
+      <div class="animate-modal-in flex w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-900 shadow-2xl shadow-black/60">
+        <div class="flex items-center justify-between gap-4 border-b border-white/10 bg-ink-850 px-6 py-4">
+          <div class="flex items-center gap-3">
+            <img src="images/watermark.png" alt="" class="h-7 w-7" />
+            <h2 class="font-display text-lg font-semibold text-white">PDF Preview</h2>
+          </div>
+          <button
+            class="closePDF icon-btn h-9 w-9 text-slate-400 hover:bg-white/10 hover:text-white focus-visible:ring-white/40"
+            title="Close PDF preview"
+            aria-label="Close PDF preview"
+          >
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        <div id="iframeContainer" class="bg-ink-950 p-4">
+          <iframe id="pdfPreview" title="PDF preview" class="h-[70vh] w-full rounded-lg border border-white/10 bg-white"></iframe>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
